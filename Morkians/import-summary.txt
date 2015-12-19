@@ -7,7 +7,6 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
-From AndEngine:
 * .gitignore
 * AUTHORS.md
 * LICENSE.md
@@ -38,18 +37,12 @@ From AndEngine:
 * ext\scripts\build_texturepacks.sh
 * git-rank-contributors.rb
 * proguard-project.txt
-From AndEnginePhysicsBox2DExtension:
-* .gitignore
-* UPDATE_LIBGDX_SOURCES.bat
-* build.xml
-* proguard-project.txt
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-In AndEngine:
 * AndroidManifest.xml => andEngine\src\main\AndroidManifest.xml
 * jni\ => andEngine\src\main\jni\
 * libs\armeabi-v7a\libandengine.so => andEngine\src\main\jniLibs\armeabi-v7a\libandengine.so
@@ -58,11 +51,6 @@ In AndEngine:
 * libs\x86\libandengine.so => andEngine\src\main\jniLibs\x86\libandengine.so
 * res\ => andEngine\src\main\res\
 * src\ => andEngine\src\main\java\
-In AndEnginePhysicsBox2DExtension:
-* AndroidManifest.xml => andEnginePhysicsBox2DExtension\src\main\AndroidManifest.xml
-* jni\ => andEnginePhysicsBox2DExtension\src\main\jni\
-* res\ => andEnginePhysicsBox2DExtension\src\main\res\
-* src\ => andEnginePhysicsBox2DExtension\src\main\java\
 
 Next Steps:
 -----------
