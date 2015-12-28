@@ -36,14 +36,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends SimpleBaseGameActivity
-    implements IOnSceneTouchListener {
+        implements IOnSceneTouchListener {
     private int width = 1280, height = 700;
     private Camera camera;
     private BitmapTextureAtlas bitmapTextureAtlas;
-    private TextureRegion monstroRegion, ballRegion, bombRegion,backgroundregion;
+    private TextureRegion playerRegion, ballRegion, balaPlayerRegion, backgroundregion;
     private Scene scene;
-    private Sprite monstroSprite;
-    private ArrayList<Sprite> ballList, bombList;
+    private ArrayList<Sprite> ballList, bulletList;
     private Text lifeText;
     private Font mFont;
     private int vidas;
@@ -58,12 +57,12 @@ public class MainActivity extends SimpleBaseGameActivity
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
         bitmapTextureAtlas = new BitmapTextureAtlas(getTextureManager(),2048, 2048);
-        monstroRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas, this, "monster.png", 0, 0);
+        playerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                bitmapTextureAtlas, this, "nave.png", 0, 0);
         ballRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas, this, "ball64.png", 200, 200);
-        bombRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas, this, "bomb.png", 300,300);
+                bitmapTextureAtlas, this, "kamikaze.png", 200, 200);
+        balaPlayerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                bitmapTextureAtlas, this, "balaplayer.png", 300,300);
         backgroundregion=BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 bitmapTextureAtlas,this,"background.png",400,400);
 
@@ -74,7 +73,7 @@ public class MainActivity extends SimpleBaseGameActivity
                 Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
         this.mFont.load();
         MusicFactory.setAssetBasePath("mfx/");
-        backgroundMusic=MusicFactory.createMusicFromAsset(getMusicManager(),this,"wagner_the_ride_of_the_valkyries.ogg");
+        backgroundMusic = MusicFactory.createMusicFromAsset(getMusicManager(),this, "wagner_the_ride_of_the_valkyries.ogg");
         SoundFactory.setAssetBasePath("mfx/");
         shootSound=SoundFactory.createSoundFromAsset(getSoundManager(),this,"lightsaber_01.wav");
     }
@@ -82,25 +81,21 @@ public class MainActivity extends SimpleBaseGameActivity
     @Override
     protected Scene onCreateScene() {
         ballList = new ArrayList<>();
-        bombList = new ArrayList<>();
+        bulletList = new ArrayList<>();
         vidas = 3;
 
 
         scene = new Scene();
         scene.setBackground(new Background(Color.WHITE));
-        player= new Player();
 
-
-
-        monstroSprite = new Sprite(
-                monstroRegion.getWidth()/2,
-                height/2, monstroRegion,
+        player = new Player(playerRegion.getWidth()/2,
+                height/2, playerRegion,
                 getVertexBufferObjectManager());
 
-        scene.attachChild(monstroSprite);
+        scene.attachChild(player);
 
-        addBallHandler();
-        removeBallHandler();
+        addEnemyHandler();
+        removeEnemyHandler();
         collisionHandler();
         collisionMonsterEnemyHandler();
         createBackground();
@@ -139,36 +134,36 @@ public class MainActivity extends SimpleBaseGameActivity
     }
 
 
-    private void addBall()
+    private void addEnemy()
     {
         Random r = new Random();
         int x = (int)(width + ballRegion.getWidth());
         int y = r.nextInt((int)(height-ballRegion.getHeight()));
 
-        Sprite ballSprite = new Sprite(x, y, ballRegion, getVertexBufferObjectManager());
+        Sprite bulletSprite = new Sprite(x, y, ballRegion, getVertexBufferObjectManager());
 
         int duration = r.nextInt(4) + 2;
         MoveXModifier moveXModifier = new MoveXModifier(duration,
-                ballSprite.getX(), -ballSprite.getWidth());
-        ballSprite.registerEntityModifier(moveXModifier);
+                bulletSprite.getX(), -bulletSprite.getWidth());
+        bulletSprite.registerEntityModifier(moveXModifier);
 
-        ballList.add(ballSprite);
-        scene.attachChild(ballSprite);
+        ballList.add(bulletSprite);
+        scene.attachChild(bulletSprite);
     }
 
-    private void addBallHandler()
+    private void addEnemyHandler()
     {
         TimerHandler timerHandler = new TimerHandler(3, true,
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
-                        addBall();
+                        addEnemy();
                     }
                 });
         scene.registerUpdateHandler(timerHandler);
     }
 
-    private void removeBallHandler()
+    private void removeEnemyHandler()
     {
         IUpdateHandler updateHandler = new IUpdateHandler() {
             @Override
@@ -195,24 +190,17 @@ public class MainActivity extends SimpleBaseGameActivity
         scene.registerUpdateHandler(updateHandler);
     }
 
-    private void shootBomb(float pX, float pY)
+    private void shootBullet(float pX, float pY)
     {
-        Sprite bomb = new Sprite(monstroSprite.getX(),
-                monstroSprite.getY(), bombRegion, getVertexBufferObjectManager());
-        scene.attachChild(bomb);
-        bombList.add(bomb);
-
-        float offX = pX - monstroSprite.getX();
-        float offY = pY - monstroSprite.getY();
-        float ratio = offY/offX;
-
-        int finalX = (int)(width + bomb.getWidth());
-        int finalY = (int)(ratio * finalX + monstroSprite.getY());
+        Sprite bullet = new Sprite(player.getX(),
+                player.getY(), balaPlayerRegion, getVertexBufferObjectManager());
+        scene.attachChild(bullet);
+        bulletList.add(bullet);
 
         MoveModifier modifier = new MoveModifier(3,
-                bomb.getX(), bomb.getY(),
-                finalX, finalY);
-        bomb.registerEntityModifier(modifier);
+                bullet.getX(), bullet.getY(),
+                width, player.getY());
+        bullet.registerEntityModifier(modifier);
         shootSound.play();
     }
 
@@ -220,7 +208,7 @@ public class MainActivity extends SimpleBaseGameActivity
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown())
         {
-            shootBomb(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+            shootBullet(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
             return true;
         }
         return false;
@@ -238,28 +226,28 @@ public class MainActivity extends SimpleBaseGameActivity
                 {
                     if (ball.getX() <= -ball.getWidth()) break;
 
-                    for(Sprite bomb : bombList)
+                    for(Sprite bullet : bulletList)
                     {
-                        if (bomb.getX() >= width ||
-                                bomb.getY() >= height + bomb.getHeight() ||
-                                bomb.getY() <= -bomb.getHeight())
+                        if (bullet.getX() >= width ||
+                                bullet.getY() >= height + bullet.getHeight() ||
+                                bullet.getY() <= -bullet.getHeight())
                         {
-                            scene.detachChild(bomb);
-                            bombsToRemove.add(bomb);
+                            scene.detachChild(bullet);
+                            bombsToRemove.add(bullet);
                             continue;
                         }
 
-                        if (ball.collidesWith(bomb))
+                        if (ball.collidesWith(bullet))
                         {
-                            scene.detachChild(bomb);
+                            scene.detachChild(bullet);
                             scene.detachChild(ball);
 
                             ballsToRemove.add(ball);
-                            bombsToRemove.add(bomb);
+                            bombsToRemove.add(bullet);
                         }
                     }
                 }
-                bombList.removeAll(bombsToRemove);
+                bulletList.removeAll(bombsToRemove);
                 ballList.removeAll(ballsToRemove);
             }
 
@@ -280,7 +268,7 @@ public class MainActivity extends SimpleBaseGameActivity
 
                 for(Sprite ball : ballList)
                 {
-                    if (ball.collidesWith(monstroSprite))
+                    if (ball.collidesWith(player))
                     {
                         scene.detachChild(ball);
                         vidas--;
