@@ -1,4 +1,4 @@
-package com.example.casa.testandengine;
+package com.example.casa.TheMorkians;
 
 import android.graphics.Typeface;
 import android.util.Log;
@@ -29,7 +29,6 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.adt.color.Color;
-import org.andengine.util.algorithm.Spiral;
 
 import java.io.IOException;
 import java.util.ArrayList;
