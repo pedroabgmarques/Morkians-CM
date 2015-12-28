@@ -19,6 +19,7 @@ import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
@@ -36,10 +37,10 @@ import java.util.Random;
 
 public class MainActivity extends SimpleBaseGameActivity
     implements IOnSceneTouchListener {
-    private int width = 1280, height = 800;
+    private int width = 1280, height = 700;
     private Camera camera;
     private BitmapTextureAtlas bitmapTextureAtlas;
-    private TextureRegion monstroRegion, ballRegion, bombRegion;
+    private TextureRegion monstroRegion, ballRegion, bombRegion,backgroundregion;
     private Scene scene;
     private Sprite monstroSprite;
     private ArrayList<Sprite> ballList, bombList;
@@ -48,18 +49,24 @@ public class MainActivity extends SimpleBaseGameActivity
     private int vidas;
     private Music backgroundMusic;
     private Sound shootSound;
+    private ParallaxBackground parallaxBackground;
+    private Player player;
+
 
     @Override
     protected void onCreateResources() throws IOException {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
-        bitmapTextureAtlas = new BitmapTextureAtlas(getTextureManager(),1024, 1024);
+        bitmapTextureAtlas = new BitmapTextureAtlas(getTextureManager(),2048, 2048);
         monstroRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 bitmapTextureAtlas, this, "monster.png", 0, 0);
         ballRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 bitmapTextureAtlas, this, "ball64.png", 200, 200);
         bombRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 bitmapTextureAtlas, this, "bomb.png", 300,300);
+        backgroundregion=BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                bitmapTextureAtlas,this,"background.png",400,400);
+
         bitmapTextureAtlas.load();
 
         this.mFont = FontFactory.create(getFontManager(), getTextureManager(),
@@ -78,8 +85,12 @@ public class MainActivity extends SimpleBaseGameActivity
         bombList = new ArrayList<>();
         vidas = 3;
 
+
         scene = new Scene();
         scene.setBackground(new Background(Color.WHITE));
+        player= new Player();
+
+
 
         monstroSprite = new Sprite(
                 monstroRegion.getWidth()/2,
@@ -92,6 +103,7 @@ public class MainActivity extends SimpleBaseGameActivity
         removeBallHandler();
         collisionHandler();
         collisionMonsterEnemyHandler();
+        createBackground();
 
         scene.setOnSceneTouchListener(this);
 
@@ -104,6 +116,15 @@ public class MainActivity extends SimpleBaseGameActivity
 
         return scene;
     }
+
+    private void createBackground()
+    {
+        parallaxBackground= new ParallaxBackground(0, 0, 0);
+        parallaxBackground.attachParallaxEntity(new ParallaxBackground.ParallaxEntity(0, new Sprite(
+                backgroundregion.getWidth()/2, backgroundregion.getHeight()/2, backgroundregion,getVertexBufferObjectManager())));
+        scene.setBackground(parallaxBackground);
+    }
+
 
     @Override
     public EngineOptions onCreateEngineOptions() {
