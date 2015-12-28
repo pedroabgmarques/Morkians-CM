@@ -1,4 +1,4 @@
-package com.example.casa.testandengine;
+package com.example.casa.TheMorkians;
 
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.modifier.ScaleAtModifier;
