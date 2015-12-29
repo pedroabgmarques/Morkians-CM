@@ -7,12 +7,15 @@ import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
+import org.andengine.engine.Engine;
+import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
+import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.modifier.MoveXModifier;
@@ -28,6 +31,8 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.ui.IGameInterface;
+import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.adt.color.Color;
 
@@ -35,7 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MainActivity extends SimpleBaseGameActivity
+public class MainActivity extends BaseGameActivity
         implements IOnSceneTouchListener {
     private int width = 1280, height = 700;
     private Camera camera;
@@ -45,17 +50,24 @@ public class MainActivity extends SimpleBaseGameActivity
     private ArrayList<Sprite> ballList, bulletList;
     private Text lifeText;
     private Font mFont;
-    private int vidas;
     private Music backgroundMusic;
     private Sound shootSound;
     private ParallaxBackground parallaxBackground;
     private Player player;
 
+    private ResourcesManager resourcesManager;
+
 
     @Override
-    protected void onCreateResources() throws IOException {
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException {
 
+        //Inicializar o manager de resources
+        ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager());
+        resourcesManager = ResourcesManager.getInstance();
+        pOnCreateResourcesCallback.onCreateResourcesFinished();
+
+
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         bitmapTextureAtlas = new BitmapTextureAtlas(getTextureManager(),2048, 2048);
         playerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 bitmapTextureAtlas, this, "nave.png", 0, 0);
@@ -78,12 +90,11 @@ public class MainActivity extends SimpleBaseGameActivity
         shootSound=SoundFactory.createSoundFromAsset(getSoundManager(),this,"lightsaber_01.wav");
     }
 
+
     @Override
-    protected Scene onCreateScene() {
+    public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
         ballList = new ArrayList<>();
         bulletList = new ArrayList<>();
-        vidas = 3;
-
 
         scene = new Scene();
         scene.setBackground(new Background(Color.WHITE));
@@ -109,7 +120,6 @@ public class MainActivity extends SimpleBaseGameActivity
 
         backgroundMusic.play();
 
-        return scene;
     }
 
     private void createBackground()
@@ -120,16 +130,22 @@ public class MainActivity extends SimpleBaseGameActivity
         scene.setBackground(parallaxBackground);
     }
 
+    @Override
+    public Engine onCreateEngine(EngineOptions pEngineOptions)
+    {
+        return new LimitedFPSEngine(pEngineOptions, 60);
+    }
 
     @Override
     public EngineOptions onCreateEngineOptions() {
+
         camera = new Camera(0, 0, width, height);
         EngineOptions options= new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED,
                 new FillResolutionPolicy(), camera);
 
         options.getAudioOptions().setNeedsMusic(true);
         options.getAudioOptions().setNeedsSound(true);
-
+        options.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
         return options;
     }
 
@@ -271,8 +287,7 @@ public class MainActivity extends SimpleBaseGameActivity
                     if (ball.collidesWith(player))
                     {
                         scene.detachChild(ball);
-                        vidas--;
-                        lifeText.setText("Lifes: " + vidas);
+                        lifeText.setText("Lifes: ---");
                         ballsToRemove.add(ball);
                     }
                 }
@@ -285,6 +300,11 @@ public class MainActivity extends SimpleBaseGameActivity
             }
         };
         scene.registerUpdateHandler(handler);
+    }
+
+    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException
+    {
+
     }
 }
 
