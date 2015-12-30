@@ -33,9 +33,11 @@ public class ResourcesManager {
     public ITextureRegion menuBackgroundRegion;
     public ITextureRegion playRegion;
     public ITextureRegion creditsRegion;
+    public ITextureRegion gameBackgroundRegion;
 
     private BitmapTextureAtlas loadMenuTextureAtlas;
     private BitmapTextureAtlas MenuTextureAtlas;
+    private BitmapTextureAtlas gameTextureAtlas;
 
     //---------------------------------------------
     // TEXTURES & TEXTURE REGIONS
@@ -84,7 +86,10 @@ public class ResourcesManager {
 
     private void loadGameGraphics()
     {
-
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        gameTextureAtlas =  new BitmapTextureAtlas (activity.getTextureManager(), 8192, 600, TextureOptions.BILINEAR );
+        gameBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "universe.png", 0, 0);
+        gameTextureAtlas.load();
     }
 
     private void loadGameFonts()

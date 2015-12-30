@@ -1,9 +1,12 @@
 package com.example.casa.TheMorkians;
 
+import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
 
@@ -65,6 +68,13 @@ public class GameScene extends BaseScene{
 
     private void createBackground()
     {
-        setBackground(new Background(Color.BLUE));
+        attachChild(new Sprite(0, 240, resourcesManager.gameBackgroundRegion, vbom) {
+            //Magia negra para as texturas ficarem mais bonitas
+            @Override
+            protected void preDraw(GLState pGLState, Camera pCamera) {
+                super.preDraw(pGLState, pCamera);
+                pGLState.enableDither();
+            }
+        });
     }
 }
