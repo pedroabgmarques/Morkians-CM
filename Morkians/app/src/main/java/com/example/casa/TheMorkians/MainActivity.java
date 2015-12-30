@@ -64,7 +64,7 @@ public class MainActivity extends BaseGameActivity
         resourcesManager = ResourcesManager.getInstance();
         pOnCreateResourcesCallback.onCreateResourcesFinished();
 
-
+        /*
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         bitmapTextureAtlas = new BitmapTextureAtlas(getTextureManager(),2048, 2048);
         playerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
@@ -86,6 +86,7 @@ public class MainActivity extends BaseGameActivity
         backgroundMusic = MusicFactory.createMusicFromAsset(getMusicManager(),this, "wagner_the_ride_of_the_valkyries.ogg");
         SoundFactory.setAssetBasePath("mfx/");
         shootSound=SoundFactory.createSoundFromAsset(getSoundManager(),this,"lightsaber_01.wav");
+        */
     }
 
 
@@ -93,6 +94,8 @@ public class MainActivity extends BaseGameActivity
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
 
         SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
+
+        /*
         ballList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
@@ -121,6 +124,7 @@ public class MainActivity extends BaseGameActivity
         backgroundMusic.setLooping(true);
 
         backgroundMusic.play();
+        */
 
     }
 
@@ -306,7 +310,7 @@ public class MainActivity extends BaseGameActivity
 
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException
     {
-        mEngine.registerUpdateHandler(new TimerHandler(20f, new ITimerCallback()
+        mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback()
         {
             public void onTimePassed(final TimerHandler pTimerHandler)
             {

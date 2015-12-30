@@ -73,9 +73,9 @@ public class ResourcesManager {
 
     public void loadSplashScreen()
     {
-        BitmapTextureAtlasTextureRegionFactory. setAssetBasePath(" gfx/ ") ;
-        loadMenuTextureAtlas =  new BitmapTextureAtlas ( activity . getTextureManager ( ) ,  1024 ,  1024 , TextureOptions. BILINEAR ) ;
-        loadMenu_Region = BitmapTextureAtlasTextureRegionFactory . createFromAsset ( loadMenuTextureAtlas , activity ,  " mainMenu.png " ,  0 ,  0 ) ;
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        loadMenuTextureAtlas =  new BitmapTextureAtlas (activity.getTextureManager(), 800, 480, TextureOptions. BILINEAR ) ;
+        loadMenu_Region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(loadMenuTextureAtlas, activity, "mainMenu.png", 0, 0);
         loadMenuTextureAtlas.load() ;
 
     }

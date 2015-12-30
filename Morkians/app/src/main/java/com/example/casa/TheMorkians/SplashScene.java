@@ -22,7 +22,7 @@ public class SplashScene extends BaseScene {
                 pGLState.enableDither();
             }
         };
-        loadImage.setScale(1.5f);
+        loadImage.setScale(1f);
         loadImage.setPosition(400,240);
         attachChild(loadImage);
 
