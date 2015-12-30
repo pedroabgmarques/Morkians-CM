@@ -1,11 +1,12 @@
 package com.example.casa.TheMorkians;
 
 import org.andengine.engine.Engine;
+import org.andengine.ui.IGameInterface;
 
 /**
  * Created by PedroMarques on 29-12-2015.
  */
-public class SceneManager {
+public class    SceneManager {
     //---------------------------------------------
     // SCENES
     //---------------------------------------------
@@ -84,5 +85,20 @@ public class SceneManager {
     public BaseScene getCurrentScene()
     {
         return currentScene;
+    }
+
+    public void createSplashScene(IGameInterface.OnCreateSceneCallback pOnCreateSceneCallback)
+    {
+        ResourcesManager.getInstance().loadSplashScreen();
+        splashScene = new SplashScene();
+        currentScene = splashScene;
+        pOnCreateSceneCallback.onCreateSceneFinished(splashScene);
+    }
+
+    private void disposeSplashScene()
+    {
+        ResourcesManager.getInstance().unloadSplashScreen();
+        splashScene.disposeScene();
+        splashScene = null;
     }
 }

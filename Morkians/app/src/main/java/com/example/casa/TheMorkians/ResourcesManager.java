@@ -2,6 +2,10 @@ package com.example.casa.TheMorkians;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
@@ -18,6 +22,8 @@ public class ResourcesManager {
     public MainActivity activity;
     public Camera camera;
     public VertexBufferObjectManager vbom;
+    public ITextureRegion loadMenu_Region;
+    private BitmapTextureAtlas loadMenuTextureAtlas;
 
     //---------------------------------------------
     // TEXTURES & TEXTURE REGIONS
@@ -67,11 +73,17 @@ public class ResourcesManager {
 
     public void loadSplashScreen()
     {
+        BitmapTextureAtlasTextureRegionFactory. setAssetBasePath(" gfx/ ") ;
+        loadMenuTextureAtlas =  new BitmapTextureAtlas ( activity . getTextureManager ( ) ,  1024 ,  1024 , TextureOptions. BILINEAR ) ;
+        loadMenu_Region = BitmapTextureAtlasTextureRegionFactory . createFromAsset ( loadMenuTextureAtlas , activity ,  " mainMenu.png " ,  0 ,  0 ) ;
+        loadMenuTextureAtlas.load() ;
 
     }
 
     public void unloadSplashScreen()
     {
+        loadMenuTextureAtlas.unload();
+        loadMenu_Region = null;
 
     }
 

@@ -31,9 +31,7 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TextureRegion;
-import org.andengine.ui.IGameInterface;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.adt.color.Color;
 
 import java.io.IOException;
@@ -42,7 +40,7 @@ import java.util.Random;
 
 public class MainActivity extends BaseGameActivity
         implements IOnSceneTouchListener {
-    private int width = 1280, height = 700;
+    private int width = 800, height = 480;
     private Camera camera;
     private BitmapTextureAtlas bitmapTextureAtlas;
     private TextureRegion playerRegion, ballRegion, balaPlayerRegion, backgroundregion;
@@ -93,6 +91,8 @@ public class MainActivity extends BaseGameActivity
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
+
+        SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
         ballList = new ArrayList<>();
         bulletList = new ArrayList<>();
 
@@ -111,6 +111,8 @@ public class MainActivity extends BaseGameActivity
         collisionMonsterEnemyHandler();
         createBackground();
 
+
+
         scene.setOnSceneTouchListener(this);
 
         lifeText = new Text(80, height-50, mFont, "Lifes: 3", getVertexBufferObjectManager());
@@ -126,7 +128,7 @@ public class MainActivity extends BaseGameActivity
     {
         parallaxBackground= new ParallaxBackground(0, 0, 0);
         parallaxBackground.attachParallaxEntity(new ParallaxBackground.ParallaxEntity(0, new Sprite(
-                backgroundregion.getWidth()/2, backgroundregion.getHeight()/2, backgroundregion,getVertexBufferObjectManager())));
+                backgroundregion.getWidth() / 2, backgroundregion.getHeight() / 2, backgroundregion, getVertexBufferObjectManager())));
         scene.setBackground(parallaxBackground);
     }
 
@@ -304,6 +306,15 @@ public class MainActivity extends BaseGameActivity
 
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException
     {
+        mEngine.registerUpdateHandler(new TimerHandler(20f, new ITimerCallback()
+        {
+            public void onTimePassed(final TimerHandler pTimerHandler)
+            {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+
+            }
+        }));
+        pOnPopulateSceneCallback.onPopulateSceneFinished();
 
     }
 }
