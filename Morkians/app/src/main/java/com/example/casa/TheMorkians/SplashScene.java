@@ -13,7 +13,7 @@ public class SplashScene extends BaseScene {
     @Override
     public void createScene()
     {
-        loadImage = new Sprite(0, 0, resourcesManager.loadMenu_Region, vbom)
+        loadImage = new Sprite(0, 0, resourcesManager.loadMenuRegion, vbom)
         {
             @Override
             protected void preDraw(GLState pGLState, Camera pCamera)

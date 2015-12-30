@@ -95,6 +95,14 @@ public class    SceneManager {
         pOnCreateSceneCallback.onCreateSceneFinished(splashScene);
     }
 
+    public void createMenuScene()
+    {
+        ResourcesManager.getInstance().loadMenuResources();
+        menuScene = new MainMenuScene();
+        setScene(menuScene);
+        disposeSplashScene();
+    }
+
     private void disposeSplashScene()
     {
         ResourcesManager.getInstance().unloadSplashScreen();
