@@ -80,6 +80,7 @@ public class MainMenuScene extends BaseScene
         switch(pMenuItem.getID())
         {
             case MENU_PLAY:
+                SceneManager.getInstance().loadGameScene(engine);
                 return true;
             case MENU_CREDITS:
                 return true;

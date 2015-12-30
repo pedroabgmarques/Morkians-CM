@@ -1,7 +1,11 @@
 package com.example.casa.TheMorkians;
 
+import android.graphics.Typeface;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -23,6 +27,7 @@ public class ResourcesManager {
     public MainActivity activity;
     public Camera camera;
     public VertexBufferObjectManager vbom;
+    public Font font;
 
     public ITextureRegion loadMenuRegion;
     public ITextureRegion menuBackgroundRegion;
@@ -44,6 +49,7 @@ public class ResourcesManager {
     {
         loadMenuGraphics();
         loadMenuAudio();
+        loadMenuFonts();
     }
 
     public void loadGameResources()
@@ -66,6 +72,14 @@ public class ResourcesManager {
     private void loadMenuAudio()
     {
 
+    }
+
+    private void loadMenuFonts()
+    {
+        font = FontFactory.create(activity.getFontManager(), activity.getTextureManager(),
+                256, 256,
+                Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
+        font.load();
     }
 
     private void loadGameGraphics()
@@ -97,6 +111,21 @@ public class ResourcesManager {
         loadMenuTextureAtlas.unload();
         loadMenuRegion = null;
 
+    }
+
+    public void unloadMenuTextures()
+    {
+        MenuTextureAtlas.unload();
+    }
+
+    public void loadMenuTextures()
+    {
+        MenuTextureAtlas.load();
+    }
+
+    public void unloadGameTextures()
+    {
+        // TODO (Since we did not create any textures for game scene yet)
     }
 
     /**
