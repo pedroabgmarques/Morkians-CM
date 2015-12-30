@@ -78,10 +78,13 @@ public class ResourcesManager {
 
     private void loadMenuFonts()
     {
-        font = FontFactory.create(activity.getFontManager(), activity.getTextureManager(),
+        FontFactory.setAssetBasePath("font/");
+        font = FontFactory.createFromAsset(activity.getFontManager(), activity.getTextureManager(),
                 256, 256,
-                Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
+                TextureOptions.BILINEAR,
+                activity.getAssets(), "Plok.ttf", 18, true, android.graphics.Color.GREEN);
         font.load();
+
     }
 
     private void loadGameGraphics()

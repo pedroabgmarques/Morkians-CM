@@ -6,6 +6,7 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
@@ -30,6 +31,7 @@ public class GameScene extends BaseScene{
     private void createHUD()
     {
         gameHUD = new HUD();
+
 
         // CREATE SCORE TEXT
         scoreText = new Text(20, 420, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
