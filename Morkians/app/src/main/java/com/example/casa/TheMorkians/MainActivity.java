@@ -66,23 +66,6 @@ public class MainActivity extends BaseGameActivity
         pOnCreateResourcesCallback.onCreateResourcesFinished();
 
         /*
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        bitmapTextureAtlas = new BitmapTextureAtlas(getTextureManager(),2048, 2048);
-        playerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas, this, "nave.png", 0, 0);
-        ballRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas, this, "kamikaze.png", 200, 200);
-        balaPlayerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas, this, "balaplayer.png", 300,300);
-        backgroundregion=BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-                bitmapTextureAtlas,this,"background.png",400,400);
-
-        bitmapTextureAtlas.load();
-
-        this.mFont = FontFactory.create(getFontManager(), getTextureManager(),
-                256, 256,
-                Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
-        this.mFont.load();
         MusicFactory.setAssetBasePath("mfx/");
         backgroundMusic = MusicFactory.createMusicFromAsset(getMusicManager(),this, "wagner_the_ride_of_the_valkyries.ogg");
         SoundFactory.setAssetBasePath("mfx/");

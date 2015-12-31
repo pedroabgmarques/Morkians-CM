@@ -15,6 +15,7 @@ public class Player extends Sprite
 
     public Player(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
+        this.vidas = 3;
     }
 
 }
