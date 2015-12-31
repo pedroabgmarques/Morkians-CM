@@ -88,7 +88,7 @@ public class ResourcesManager {
 
     private void loadMenuAudio()
     {
-
+        //TODO Load da musica do menu
     }
 
     private void loadMenuFonts()
@@ -179,7 +179,7 @@ public class ResourcesManager {
 
     public void unloadGameTextures()
     {
-        // TODO (Since we did not create any textures for game scene yet)
+        gameLevelAtlas.unload();
     }
 
     /**

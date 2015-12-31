@@ -86,12 +86,6 @@ public class MainActivity extends BaseGameActivity
         scene = new Scene();
         scene.setBackground(new Background(Color.WHITE));
 
-        player = new Player(playerRegion.getWidth()/2,
-                height/2, playerRegion,
-                getVertexBufferObjectManager());
-
-        scene.attachChild(player);
-
         addEnemyHandler();
         removeEnemyHandler();
         collisionHandler();

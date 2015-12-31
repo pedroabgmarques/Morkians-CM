@@ -18,5 +18,7 @@ public class Player extends Sprite
         this.vidas = 3;
     }
 
+
+
 }
 

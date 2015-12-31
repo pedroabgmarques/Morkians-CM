@@ -5,6 +5,7 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
+import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -87,6 +88,24 @@ public class GameScene extends BaseScene{
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
+        //A linha abaixo faz a camara seguir o jogador
+        //camera.setChaseEntity(player);
+
+        //Mover a camara
+        IUpdateHandler cameraUpdateHandler = new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                camera.setCenter(camera.getCenterX() + 1, camera.getCenterY());
+                player.setPosition(player.getX() + 1, player.getY());
+            }
+
+            @Override
+            public void reset() {
+                camera.setCenter(0, 0);
+            }
+        };
+
+        registerUpdateHandler(cameraUpdateHandler);
         attachChild(player);
     }
 
@@ -101,7 +120,9 @@ public class GameScene extends BaseScene{
 
             @Override
             public void onControlClick(final AnalogOnScreenControl pAnalogOnScreenControl) {
-               /* Não fazemos nada no clique neste controlo */
+               /* Não fazemos nada no clique neste controlo
+               * Se calhar podia-se disparar aqui?
+               * */
             }
         });
 
