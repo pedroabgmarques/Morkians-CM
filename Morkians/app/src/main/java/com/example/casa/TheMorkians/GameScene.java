@@ -7,11 +7,17 @@ import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnS
 import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.physics.PhysicsHandler;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by PedroMarques on 30-12-2015.
@@ -23,6 +29,8 @@ public class GameScene extends BaseScene{
     private int score = 0;
     private Player player;
     private PhysicsHandler playerPhysicsHandler;
+    private ArrayList<Enemy> enemyList;
+    private Enemy enemy;
 
     private void addToScore(int i)
     {
@@ -36,6 +44,7 @@ public class GameScene extends BaseScene{
         createHUD();
         createLevel();
         createControls();
+        addEnemyHandler();
     }
 
     @Override
@@ -84,6 +93,7 @@ public class GameScene extends BaseScene{
     }
 
     private void createLevel(){
+
         player = new Player(80, 230, resourcesManager.gamePlayerRegion, vbom);
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
@@ -107,6 +117,38 @@ public class GameScene extends BaseScene{
 
         registerUpdateHandler(cameraUpdateHandler);
         attachChild(player);
+    }
+
+    private void createNewEnemy()
+    {
+        Random enemyRandom = new Random();
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameKamikazeRegion.getWidth());
+        int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameKamikazeRegion.getHeight()));
+
+        enemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom);
+        enemy.setScale(0.8f);
+        PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(enemy);
+        enemy.registerUpdateHandler(enemyPhysicsHandler);
+
+        //int duration = enemyRandom.nextInt(4) + 2;
+        //MoveXModifier moveXModifier = new MoveXModifier(duration,
+                //enemy.getX(), -enemy.getWidth());
+        //enemy.registerEntityModifier(moveXModifier);
+
+        //enemyList.add(enemy);
+        attachChild(enemy);
+    }
+
+    private void addEnemyHandler()
+    {
+        TimerHandler timerHandler = new TimerHandler(3, true,
+                new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
+                        createNewEnemy();
+                    }
+                });
+        registerUpdateHandler(timerHandler);
     }
 
     private void createControls(){
