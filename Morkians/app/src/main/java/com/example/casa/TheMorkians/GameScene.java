@@ -157,18 +157,18 @@ public class GameScene extends BaseScene{
                 vbom, new IAnalogOnScreenControlListener() {
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
+                playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
+                //if(player.getY()+player.getHeight()>=camera.getHeight()||player.getY()<=player.getHeight())
+                //{
+                //    playerPhysicsHandler.setVelocity(pValueX * 200,0);
 
-                if(player.getY()+player.getHeight()>=camera.getHeight()||player.getY()<=player.getHeight())
-                {
-                    playerPhysicsHandler.setVelocity(pValueX * 200,0);
-
-                }
-                else if (player.getX()>=camera.getWidth()||player.getX()<=0)
-                {
-                    playerPhysicsHandler.setVelocity(0,pValueY*200);
-                }
-                else
-                    playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
+                //}
+                //else if (player.getX()>=camera.getWidth()||player.getX()<=0)
+                //{
+                //    playerPhysicsHandler.setVelocity(0,pValueY*200);
+                //}
+                //else
+                //    playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
 
             }
 
