@@ -115,13 +115,41 @@ public class GameScene extends BaseScene{
                 vbom, new IAnalogOnScreenControlListener() {
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
-                playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
+
+                if(player.getY()+player.getHeight()>=camera.getHeight()||player.getY()<=player.getHeight())
+                {
+                    playerPhysicsHandler.setVelocity(pValueX * 200,0);
+
+                }
+                else if (player.getX()>=camera.getWidth()||player.getX()<=0)
+                {
+                    playerPhysicsHandler.setVelocity(0,pValueY*200);
+                }
+                else
+                    playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
+
             }
 
             @Override
             public void onControlClick(final AnalogOnScreenControl pAnalogOnScreenControl) {
                /* Não fazemos nada no clique neste controlo
                * Se calhar podia-se disparar aqui?
+               * Sprite bomb = new Sprite(monstroSprite.getX(),
+                monstroSprite.getY(), bombRegion, getVertexBufferObjectManager());
+        scene.attachChild(bomb);
+        bombList.add(bomb);
+
+        float offX = pX - monstroSprite.getX();
+        float offY = pY - monstroSprite.getY();
+        float ratio = offY/offX;
+
+        int finalX = (int)(width + bomb.getWidth());
+        int finalY = (int)(ratio * finalX + monstroSprite.getY());
+
+        MoveModifier modifier = new MoveModifier(3,
+                bomb.getX(), bomb.getY(),
+                finalX, finalY);
+        bomb.registerEntityModifier(modifier);
                * */
             }
         });
