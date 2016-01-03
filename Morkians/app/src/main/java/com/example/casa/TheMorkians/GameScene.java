@@ -10,6 +10,7 @@ import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
+import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -132,10 +133,15 @@ public class GameScene extends BaseScene{
         enemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=5;
+        int velocity=10;
+        double incremetalValue=90;
+        incremetalValue++;
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
                 enemy.getX(), -enemy.getWidth());
         enemy.registerEntityModifier(moveXModifier);
+        MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,enemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*enemy.getX());
+        enemy.registerEntityModifier(moveYModifier);
+
 
         //enemyList.add(enemy);
         attachChild(enemy);
@@ -143,7 +149,7 @@ public class GameScene extends BaseScene{
 
     private void addEnemyHandler()
     {
-        TimerHandler timerHandler = new TimerHandler(3, true,
+        TimerHandler timerHandler = new TimerHandler(1, true,
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
