@@ -33,6 +33,7 @@ public class GameScene extends BaseScene{
     private ArrayList<Enemy> enemyList;
     private Enemy kamikazeEnemy;
     private Enemy bomberEnemy;
+    private Enemy heavyBomberEnemy;
 
     private void addToScore(int i)
     {
@@ -48,6 +49,7 @@ public class GameScene extends BaseScene{
         createControls();
         addEnemyHandler();
         addBomberEnemyHandler();
+        addHeavyBomberEnemyHandler();
     }
 
     @Override
@@ -161,13 +163,36 @@ public class GameScene extends BaseScene{
         bomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=15;
+        int velocity=12;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
                 bomberEnemy.getX(), -bomberEnemy.getWidth());
         bomberEnemy.registerEntityModifier(moveXModifier);
 
         attachChild(bomberEnemy);
+
+
+    }
+
+    private void createNewHeavyBomberEnemy()
+    {
+        Random enemyRandom= new Random();
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameHeavyBomberRegion.getWidth());
+        int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameHeavyBomberRegion.getHeight()));
+
+        heavyBomberEnemy=new Enemy(x,y,resourcesManager.gameHeavyBomberRegion,vbom);
+        heavyBomberEnemy.setScale(0.5f);
+        PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(heavyBomberEnemy);
+        heavyBomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
+
+        int duration = enemyRandom.nextInt(6) + 2;
+        int velocity=17;
+
+        MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
+                heavyBomberEnemy.getX(), -heavyBomberEnemy.getWidth());
+        heavyBomberEnemy.registerEntityModifier(moveXModifier);
+
+        attachChild(heavyBomberEnemy);
 
 
     }
@@ -192,6 +217,18 @@ public class GameScene extends BaseScene{
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
                         createNewBomberEnemy();
+                    }
+                });
+        registerUpdateHandler(timerHandler);
+
+    }
+    private void addHeavyBomberEnemyHandler()
+    {
+        TimerHandler timerHandler = new TimerHandler(6, true,
+                new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
+                        createNewHeavyBomberEnemy();
                     }
                 });
         registerUpdateHandler(timerHandler);
