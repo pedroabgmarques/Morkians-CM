@@ -34,6 +34,7 @@ public class GameScene extends BaseScene{
     private Enemy kamikazeEnemy;
     private Enemy bomberEnemy;
     private Enemy heavyBomberEnemy;
+    private ObjectsScene planet,moon;
 
     private void addToScore(int i)
     {
@@ -45,11 +46,13 @@ public class GameScene extends BaseScene{
     public void createScene() {
         createBackground();
         createHUD();
-        createLevel();
         createControls();
         addEnemyHandler();
         addBomberEnemyHandler();
         addHeavyBomberEnemyHandler();
+        addObjectsInTheScene();
+        createLevel();
+
     }
 
     @Override
@@ -196,6 +199,31 @@ public class GameScene extends BaseScene{
 
 
     }
+    private void addObjectsInTheScene()
+    {
+        int x=(int)(camera.getCenterX());
+        int y=(int)(camera.getCenterX());
+
+        moon=new ObjectsScene(x*8,y-10,resourcesManager.objectMoonRegion,vbom);
+        moon.setScale(0.6f);
+
+        MoveXModifier moveMoonXModifier = new MoveXModifier(75,
+                moon.getX(), -moon.getWidth());
+        moon.registerEntityModifier(moveMoonXModifier);
+        attachChild(moon);
+
+        planet= new ObjectsScene(x*7,y,resourcesManager.objectPlanetRegion,vbom);
+        planet.setScale(0.6f);
+
+        MoveXModifier movePlanetXModifier = new MoveXModifier(90,
+                planet.getX(), -planet.getWidth());
+        planet.registerEntityModifier(movePlanetXModifier);
+
+        attachChild(planet);
+
+
+
+    }
 
 
     private void addEnemyHandler()
@@ -235,6 +263,7 @@ public class GameScene extends BaseScene{
 
     }
 
+
     private void createControls(){
         AnalogOnScreenControl velocityOnScreenControl = new AnalogOnScreenControl(84, 84, camera,
                 resourcesManager.gameVirtualJoystickBaseRegion, resourcesManager.gameVirtualJoystickPadRegion, 0.1f,
@@ -267,27 +296,12 @@ public class GameScene extends BaseScene{
 
             @Override
             public void onControlClick(final AnalogOnScreenControl pAnalogOnScreenControl) {
-               /* Não fazemos nada no clique neste controlo
-               * Se calhar podia-se disparar aqui?
-               * Sprite bomb = new Sprite(monstroSprite.getX(),
-                monstroSprite.getY(), bombRegion, getVertexBufferObjectManager());
-        scene.attachChild(bomb);
-        bombList.add(bomb);
 
-        float offX = pX - monstroSprite.getX();
-        float offY = pY - monstroSprite.getY();
-        float ratio = offY/offX;
-
-        int finalX = (int)(width + bomb.getWidth());
-        int finalY = (int)(ratio * finalX + monstroSprite.getY());
-
-        MoveModifier modifier = new MoveModifier(3,
-                bomb.getX(), bomb.getY(),
-                finalX, finalY);
-        bomb.registerEntityModifier(modifier);
-               * */
             }
-        });
+        }
+
+        );
+
 
         setChildScene(velocityOnScreenControl);
 

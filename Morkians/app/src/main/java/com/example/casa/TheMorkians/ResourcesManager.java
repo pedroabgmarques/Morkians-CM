@@ -37,6 +37,7 @@ public class ResourcesManager {
 
     public ITextureRegion gameVirtualJoystickBaseRegion;
     public ITextureRegion gameVirtualJoystickPadRegion;
+    public ITextureRegion gameFireButtonRegion;
 
     public ITextureRegion gameSpaceStationRegion;
     public ITextureRegion gamePlayerRegion;
@@ -48,6 +49,8 @@ public class ResourcesManager {
     public ITextureRegion gamePlayerLaserRegion;
     public ITextureRegion gameEnemyLaserRegion;
     public ITextureRegion gameMissileRegion;
+    public ITextureRegion objectMoonRegion;
+    public ITextureRegion objectPlanetRegion;
 
     private BitmapTextureAtlas loadMenuTextureAtlas;
     private BitmapTextureAtlas MenuTextureAtlas;
@@ -109,7 +112,7 @@ public class ResourcesManager {
         gameBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "universe.png", 0, 0);
         gameTextureAtlas.load();
 
-        gameLevelAtlas = new BitmapTextureAtlas (activity.getTextureManager(), 1024, 512, TextureOptions.BILINEAR );
+        gameLevelAtlas = new BitmapTextureAtlas (activity.getTextureManager(), 2048, 2048, TextureOptions.BILINEAR );
         gameSpaceStationRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
                 activity, "spaceStation.png", 0, 0);
         gamePlayerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
@@ -130,15 +133,22 @@ public class ResourcesManager {
                 activity, "balainimigo.png", 441, 409);
         gameMissileRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
                 activity, "missil.png", 441, 425);
+        objectPlanetRegion=BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
+                activity,"planeta.png",495,453);
+        objectMoonRegion=BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
+                activity,"Moon.png",1160,1418);
         gameLevelAtlas.load();
 
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/controls/");
-        gameVirtualJoystickAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+        gameVirtualJoystickAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 512, TextureOptions.BILINEAR);
         gameVirtualJoystickBaseRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameVirtualJoystickAtlas,
                 activity, "virtual_joystick_base.png", 0, 0);
         gameVirtualJoystickPadRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameVirtualJoystickAtlas,
                 activity, "virtual_joystick_pad.png", 128, 0);
+        gameFireButtonRegion= BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameVirtualJoystickAtlas,
+                activity,"fireButton.png",128,129);
         gameVirtualJoystickAtlas.load();
+
     }
 
     private void loadGameFonts()
