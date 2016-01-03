@@ -31,7 +31,8 @@ public class GameScene extends BaseScene{
     private Player player;
     private PhysicsHandler playerPhysicsHandler;
     private ArrayList<Enemy> enemyList;
-    private Enemy enemy;
+    private Enemy kamikazeEnemy;
+    private Enemy bomberEnemy;
 
     private void addToScore(int i)
     {
@@ -46,6 +47,7 @@ public class GameScene extends BaseScene{
         createLevel();
         createControls();
         addEnemyHandler();
+        addBomberEnemyHandler();
     }
 
     @Override
@@ -126,26 +128,50 @@ public class GameScene extends BaseScene{
         int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameKamikazeRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameKamikazeRegion.getHeight()));
 
-        enemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom);
-        enemy.setScale(0.8f);
+        kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom);
+        kamikazeEnemy.setScale(0.8f);
 
-        PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(enemy);
-        enemy.registerUpdateHandler(enemyPhysicsHandler);
+        PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(kamikazeEnemy);
+        kamikazeEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
         int velocity=10;
-        double incremetalValue=90;
-        incremetalValue++;
+
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                enemy.getX(), -enemy.getWidth());
-        enemy.registerEntityModifier(moveXModifier);
-        MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,enemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*enemy.getX());
-        enemy.registerEntityModifier(moveYModifier);
+                kamikazeEnemy.getX(), -kamikazeEnemy.getWidth());
+        kamikazeEnemy.registerEntityModifier(moveXModifier);
+        MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
+                kamikazeEnemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*kamikazeEnemy.getX());
+        kamikazeEnemy.registerEntityModifier(moveYModifier);
 
 
         //enemyList.add(enemy);
-        attachChild(enemy);
+        attachChild(kamikazeEnemy);
     }
+    private void createNewBomberEnemy()
+    {
+
+        Random enemyRandom = new Random();
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameBomberRegion.getWidth());
+        int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameBomberRegion.getHeight()));
+
+        bomberEnemy = new Enemy(x, y, resourcesManager.gameBomberRegion, vbom);
+        bomberEnemy.setScale(0.5f);
+        PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(bomberEnemy);
+        bomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
+
+        int duration = enemyRandom.nextInt(4) + 2;
+        int velocity=15;
+
+        MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
+                bomberEnemy.getX(), -bomberEnemy.getWidth());
+        bomberEnemy.registerEntityModifier(moveXModifier);
+
+        attachChild(bomberEnemy);
+
+
+    }
+
 
     private void addEnemyHandler()
     {
@@ -159,6 +185,18 @@ public class GameScene extends BaseScene{
         registerUpdateHandler(timerHandler);
 
     }
+    private void addBomberEnemyHandler()
+    {
+        TimerHandler timerHandler = new TimerHandler(4, true,
+                new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
+                        createNewBomberEnemy();
+                    }
+                });
+        registerUpdateHandler(timerHandler);
+
+    }
 
     private void createControls(){
         AnalogOnScreenControl velocityOnScreenControl = new AnalogOnScreenControl(84, 84, camera,
@@ -166,18 +204,27 @@ public class GameScene extends BaseScene{
                 vbom, new IAnalogOnScreenControlListener() {
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
-                playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
-                //if(player.getY()+player.getHeight()>=camera.getHeight()||player.getY()<=player.getHeight())
-                //{
-                //    playerPhysicsHandler.setVelocity(pValueX * 200,0);
+                //playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
+                float currentPValueX=pValueX;
+                float currentPValueY=pValueY;
+                if(player.getY()+player.getHeight()>=camera.getHeight())
+                {
 
-                //}
-                //else if (player.getX()>=camera.getWidth()||player.getX()<=0)
+
+                    playerPhysicsHandler.setVelocity(pValueX * 200,-20);
+
+                }
+                else if(player.getY()<=player.getHeight())
+                {
+                    playerPhysicsHandler.setVelocity(pValueX * 200,+20);
+
+                }
+                //else if (player.getX()+player.getWidth()/2<=0)
                 //{
-                //    playerPhysicsHandler.setVelocity(0,pValueY*200);
+                 //   playerPhysicsHandler.setVelocity(+20,pValueY*200);
                 //}
-                //else
-                //    playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
+                else
+                    playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
 
             }
 
