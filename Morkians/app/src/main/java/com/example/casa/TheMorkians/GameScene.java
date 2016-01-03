@@ -127,13 +127,15 @@ public class GameScene extends BaseScene{
 
         enemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom);
         enemy.setScale(0.8f);
+
         PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(enemy);
         enemy.registerUpdateHandler(enemyPhysicsHandler);
 
-        //int duration = enemyRandom.nextInt(4) + 2;
-        //MoveXModifier moveXModifier = new MoveXModifier(duration,
-                //enemy.getX(), -enemy.getWidth());
-        //enemy.registerEntityModifier(moveXModifier);
+        int duration = enemyRandom.nextInt(4) + 2;
+        int velocity=5;
+        MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
+                enemy.getX(), -enemy.getWidth());
+        enemy.registerEntityModifier(moveXModifier);
 
         //enemyList.add(enemy);
         attachChild(enemy);
@@ -149,6 +151,7 @@ public class GameScene extends BaseScene{
                     }
                 });
         registerUpdateHandler(timerHandler);
+
     }
 
     private void createControls(){

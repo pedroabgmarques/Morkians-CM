@@ -10,11 +10,15 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 public class Enemy extends Sprite
 {
     private int vida;
+    public int positionX;
 
     public Enemy(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager)
     {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 
         vida=2;
+        positionX=(int)pX;
     }
+
+
 }
