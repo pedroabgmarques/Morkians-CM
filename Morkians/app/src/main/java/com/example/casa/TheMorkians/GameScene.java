@@ -78,8 +78,11 @@ public class GameScene extends BaseScene{
     private void createBackground()
     {
         attachChild(new Sprite(0, 240, resourcesManager.gameBackgroundRegion, vbom) {
+
+
             //Magia negra para as texturas ficarem mais bonitas
             @Override
+
             protected void preDraw(GLState pGLState, Camera pCamera) {
                 super.preDraw(pGLState, pCamera);
                 pGLState.enableDither();
@@ -133,7 +136,7 @@ public class GameScene extends BaseScene{
         int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameKamikazeRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameKamikazeRegion.getHeight()));
 
-        kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom);
+        kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom, resourcesManager);
         kamikazeEnemy.setScale(0.8f);
 
         PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(kamikazeEnemy);
@@ -160,7 +163,7 @@ public class GameScene extends BaseScene{
         int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameBomberRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameBomberRegion.getHeight()));
 
-        bomberEnemy = new Enemy(x, y, resourcesManager.gameBomberRegion, vbom);
+        bomberEnemy = new Enemy(x, y, resourcesManager.gameBomberRegion, vbom, resourcesManager);
         bomberEnemy.setScale(0.5f);
         PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(bomberEnemy);
         bomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
@@ -183,7 +186,7 @@ public class GameScene extends BaseScene{
         int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameHeavyBomberRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameHeavyBomberRegion.getHeight()));
 
-        heavyBomberEnemy=new Enemy(x,y,resourcesManager.gameHeavyBomberRegion,vbom);
+        heavyBomberEnemy=new Enemy(x,y,resourcesManager.gameHeavyBomberRegion,vbom, resourcesManager);
         heavyBomberEnemy.setScale(0.5f);
         PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(heavyBomberEnemy);
         heavyBomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
