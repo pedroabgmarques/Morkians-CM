@@ -119,7 +119,7 @@ public class ResourcesManager {
         gameHeavyBomberRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
                 activity, "caa.png", 441, 131);
         gameKamikazeRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
-                activity, "kamikaze.png", 441, 239);
+                activity, "kamikaze.png", 441, 238);
         gamePowerUpShootRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
                 activity, "PowerUp-Bala.png", 441, 307);
         gamePowerUpLifeRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameLevelAtlas,
