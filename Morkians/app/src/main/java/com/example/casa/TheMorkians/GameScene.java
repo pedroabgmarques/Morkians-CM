@@ -186,7 +186,7 @@ public class GameScene extends BaseScene{
     }
     private void addShoot()
     {
-        TimerHandler timerHandler = new TimerHandler(3, true,
+        TimerHandler timerHandler = new TimerHandler(2, true,
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
@@ -408,6 +408,7 @@ public class GameScene extends BaseScene{
                         player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
+
                     }
                 }
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
@@ -424,7 +425,7 @@ public class GameScene extends BaseScene{
 
                 //Remover inimigos que saem do ecrã
                 for(Enemy inimigo: enemyList){
-                    if(inimigo.getX() < camera.getCenterX() - camera.getWidth() - inimigo.getWidth() / 2){
+                    if(inimigo.getX() < camera.getCenterX() /*- camera.getWidth() - inimigo.getWidth() / 2*/){
                         InimigosRemover.add(inimigo);
                     }
                 }
