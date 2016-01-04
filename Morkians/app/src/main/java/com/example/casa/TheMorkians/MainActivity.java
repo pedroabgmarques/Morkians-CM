@@ -120,6 +120,8 @@ public class MainActivity extends BaseGameActivity
         EngineOptions options= new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED,
                 new FillResolutionPolicy(), camera);
 
+        options.getTouchOptions().setNeedsMultiTouch(true);
+
         options.getAudioOptions().setNeedsMusic(true);
         options.getAudioOptions().setNeedsSound(true);
         options.setWakeLockOptions(WakeLockOptions.SCREEN_ON);

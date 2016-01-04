@@ -368,9 +368,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         );
 
-
         setChildScene(velocityOnScreenControl);
-
     }
 
     private void colisions()
