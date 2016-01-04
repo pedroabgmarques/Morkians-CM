@@ -92,7 +92,7 @@ public class BalaManager {
         listaBalasRemover.clear();
         listaBalasDetach.clear();
         for(Bala bala: listaBalasEnemyVivas){
-            if(bala.getX()<=camera.getCenterX() -camera.getWidth()/2){
+            if(bala.getX() <=camera.getCenterX() -camera.getWidth()/2){
                 listaBalasRemover.add(bala);
             }
         }
@@ -106,7 +106,7 @@ public class BalaManager {
 
         listaBalasRemover.clear();
         for(Bala bala: listaBalasPlayerVivas){
-            if(bala.getX()>=camera.getCenterX()-camera.getWidth()/2){
+            if(bala.getX()>=camera.getCenterX()+camera.getWidth()/2){
                 listaBalasRemover.add(bala);
             }
         }

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends BaseGameActivity
-        implements IOnSceneTouchListener {
+        /*implements IOnSceneTouchListener*/ {
     private int width = 800, height = 480;
     private Camera camera;
     private BitmapTextureAtlas bitmapTextureAtlas;
@@ -199,15 +199,15 @@ public class MainActivity extends BaseGameActivity
         shootSound.play();
     }
 
-    @Override
-    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-        if (pSceneTouchEvent.isActionDown())
-        {
-            shootBullet(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
-            return true;
-        }
-        return false;
-    }
+    //@Override
+    //public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+    //    if (pSceneTouchEvent.isActionDown())
+    //    {
+    //        shootBullet(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     private void collisionHandler()
     {
