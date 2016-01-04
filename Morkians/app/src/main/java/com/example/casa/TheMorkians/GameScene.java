@@ -1,5 +1,7 @@
 package com.example.casa.TheMorkians;
 
+import android.widget.Toast;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -36,6 +38,8 @@ public class GameScene extends BaseScene{
     private Enemy bomberEnemy;
     private Enemy heavyBomberEnemy;
     private ObjectsScene planet,moon;
+    private ArrayList<Bala> listaBalasEnemy;
+    private ArrayList<Bala> listaBalasPlayer;
 
     private void addToScore(int i)
     {
@@ -56,6 +60,7 @@ public class GameScene extends BaseScene{
         addHeavyBomberEnemyHandler();
         addObjectsInTheScene();
         createLevel();
+
 
     }
 
@@ -113,6 +118,7 @@ public class GameScene extends BaseScene{
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
+        colisions();
         //A linha abaixo faz a camara seguir o jogador
         //camera.setChaseEntity(player);
 
@@ -341,8 +347,7 @@ public class GameScene extends BaseScene{
         //enemyList
         //listaBalasEnemy
         //listaBalasPlayer
-        final ArrayList<Bala> listaBalasEnemy = BalaManager.getBalasInimigo();
-        final ArrayList<Bala> listaBalasPlayer = BalaManager.getBalasPlayer();
+
 
 
 
@@ -351,22 +356,25 @@ public class GameScene extends BaseScene{
             @Override
             public void onUpdate(float pSecondsElapsed)
             {
-                ArrayList<Sprite> balasAremover = new ArrayList<Sprite>();
-                ArrayList<Sprite> inimigosAremover = new ArrayList<Sprite>();
+                listaBalasEnemy = BalaManager.getBalasInimigo();
+                listaBalasPlayer = BalaManager.getBalasPlayer();
+                //ArrayList<Sprite> balasAremover = new ArrayList<Sprite>();
+                //ArrayList<Sprite> inimigosAremover = new ArrayList<Sprite>();
                 //percorre lista de balas dos inimigos e verifica colisao com player
-                for(Sprite bala : listaBalasEnemy)
+                for(Bala bala : listaBalasEnemy)
                 {
                     if(bala.collidesWith(player))
                     {
-                        player.vidas--;
+                        //player.vidas--;
                         //player perde vida
                         //bala destruida
+                        //Toast.makeText(resourcesManager.activity, "colisao bala com player", Toast.LENGTH_SHORT).show();
                     }
                 }
                 //percorre lista de balas do player e verifica colisao com enimigos
-                for(Sprite bala:listaBalasPlayer)
+                for(Bala bala:listaBalasPlayer)
                 {
-                    for(Sprite enemy:enemyList)
+                    for(Enemy enemy:enemyList)
                     {
                         if(bala.collidesWith(enemy))
                         {
