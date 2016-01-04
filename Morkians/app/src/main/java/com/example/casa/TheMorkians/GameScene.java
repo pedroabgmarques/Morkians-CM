@@ -213,22 +213,32 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         kamikazeEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-<<<<<<< HEAD
+
         int velocity=3;
 
+        if (player!=null)
+        {
+            MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
+                    kamikazeEnemy.getX(), player.getX()-25);
 
-        MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                kamikazeEnemy.getX(), player.getX()-25);
-=======
-        int velocity = 5;
+            kamikazeEnemy.registerEntityModifier(moveXModifier);
+            MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
+                    kamikazeEnemy.getY(),player.getY());
+            kamikazeEnemy.registerEntityModifier(moveYModifier);
 
-        MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                kamikazeEnemy.getX(), kamikazeEnemy.getX() - 1000);
->>>>>>> c0c5f9124c016dc0b7cb729e96c455d808a0ecee
-        kamikazeEnemy.registerEntityModifier(moveXModifier);
-        MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
-                kamikazeEnemy.getY(),player.getY());
-        kamikazeEnemy.registerEntityModifier(moveYModifier);
+        }
+        else
+        {
+            MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
+                    kamikazeEnemy.getX(), -kamikazeEnemy.getX()-1000);
+
+            kamikazeEnemy.registerEntityModifier(moveXModifier);
+            MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
+                    kamikazeEnemy.getY(),-kamikazeEnemy.getX()-1000);
+            kamikazeEnemy.registerEntityModifier(moveYModifier);
+        }
+
+
 
         attachChild(kamikazeEnemy);
         enemyList.add(kamikazeEnemy);
