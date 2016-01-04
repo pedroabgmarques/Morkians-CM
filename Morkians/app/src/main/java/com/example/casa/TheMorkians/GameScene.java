@@ -61,7 +61,7 @@ public class GameScene extends BaseScene{
         addEnemyHandler();
         addBomberEnemyHandler();
         addHeavyBomberEnemyHandler();
-        addObjectsInTheScene();
+        //addObjectsInTheScene();
         createLevel();
         resourcesManager.levelMusic.play();
         resourcesManager.mainMenuMusic.stop();
@@ -101,12 +101,13 @@ public class GameScene extends BaseScene{
 
 
             //Magia negra para as texturas ficarem mais bonitas
+            /*
             @Override
-
             protected void preDraw(GLState pGLState, Camera pCamera) {
                 super.preDraw(pGLState, pCamera);
                 pGLState.enableDither();
             }
+            */
         });
     }
 

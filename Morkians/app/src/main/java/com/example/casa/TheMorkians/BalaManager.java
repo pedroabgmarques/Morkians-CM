@@ -68,7 +68,7 @@ public class BalaManager {
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX, -camera.getWidth() );
+        MoveXModifier moveXModifier = new MoveXModifier(50f, pX, -camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
         bala.setScale(0.5f);
