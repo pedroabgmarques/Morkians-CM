@@ -353,9 +353,7 @@ public class GameScene extends BaseScene{
 
         );
 
-
         setChildScene(velocityOnScreenControl);
-
     }
 
     private void colisions()
