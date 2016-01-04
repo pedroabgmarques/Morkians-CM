@@ -131,7 +131,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
-        setOnSceneTouchListener(resourcesManager.activity);
+        setOnSceneTouchListener(this);
         colisions();
 
         //A linha abaixo faz a camara seguir o jogador
@@ -164,7 +164,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown())
         {
-            Bala novaBala = BalaManager.shootBalaPlayer(player.getX(), player.getY());
+            Bala novaBala = BalaManager.shootBalaPlayer(player.getX() + player.getWidth() + 5, player.getY());
+            attachChild(novaBala);
             return true;
         }
         return false;
