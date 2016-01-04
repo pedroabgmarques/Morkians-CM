@@ -1,8 +1,5 @@
 package org.andengine.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.UpdateHandlerList;
@@ -19,6 +16,10 @@ import org.andengine.util.adt.list.SmartList;
 import org.andengine.util.adt.transformation.Transformation;
 import org.andengine.util.algorithm.collision.EntityCollisionChecker;
 import org.andengine.util.call.ParameterCallable;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -1400,7 +1401,7 @@ public class Entity implements IEntity {
 	}
 
 	@Override
-	public final void onUpdate(final float pSecondsElapsed) {
+	public final void onUpdate(final float pSecondsElapsed) throws IOException {
 		if (!this.mIgnoreUpdate) {
 			this.onManagedUpdate(pSecondsElapsed);
 		}
@@ -1640,7 +1641,7 @@ public class Entity implements IEntity {
 		pGLState.popModelViewGLMatrix();
 	}
 
-	protected void onManagedUpdate(final float pSecondsElapsed) {
+	protected void onManagedUpdate(final float pSecondsElapsed) throws IOException {
 		if (this.mEntityModifiers != null) {
 			this.mEntityModifiers.onUpdate(pSecondsElapsed);
 		}

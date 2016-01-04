@@ -1,12 +1,14 @@
 package org.andengine.engine.splitscreen;
 
+import android.opengl.GLES20;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.util.GLState;
 
-import android.opengl.GLES20;
+import java.io.IOException;
 
 /**
  * (c) 2010 Nicolas Gramlich
@@ -61,7 +63,7 @@ public class SingleSceneSplitScreenEngine extends Engine {
 	// ===========================================================
 
 	@Override
-	protected void onUpdateScene(final float pSecondsElapsed) {
+	protected void onUpdateScene(final float pSecondsElapsed) throws IOException {
 		super.onUpdateScene(pSecondsElapsed);
 
 		this.getSecondCamera().onUpdate(pSecondsElapsed);

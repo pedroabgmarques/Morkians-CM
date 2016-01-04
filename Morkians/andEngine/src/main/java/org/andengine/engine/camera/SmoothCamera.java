@@ -1,6 +1,8 @@
 package org.andengine.engine.camera;
 
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -137,7 +139,7 @@ public class SmoothCamera extends ZoomCamera {
 	}
 
 	@Override
-	public void onUpdate(final float pSecondsElapsed) {
+	public void onUpdate(final float pSecondsElapsed) throws IOException {
 		super.onUpdate(pSecondsElapsed);
 		/* Update center. */
 		final float currentCenterX = this.getCenterX();

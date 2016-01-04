@@ -1,5 +1,7 @@
 package org.andengine.engine.handler.timer;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -16,5 +18,5 @@ public interface ITimerCallback {
 	// Methods
 	// ===========================================================
 
-	public void onTimePassed(final TimerHandler pTimerHandler);
+	public void onTimePassed(final TimerHandler pTimerHandler) throws IOException;
 }

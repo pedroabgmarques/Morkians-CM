@@ -2,6 +2,8 @@ package org.andengine.engine.handler;
 
 import org.andengine.util.IMatcher;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -18,7 +20,7 @@ public interface IUpdateHandler {
 	// Methods
 	// ===========================================================
 
-	public void onUpdate(final float pSecondsElapsed);
+	public void onUpdate(final float pSecondsElapsed) throws IOException;
 	public void reset();
 
 	// TODO Maybe add onRegister and onUnregister. (Maybe add SimpleUpdateHandler that implements all methods, but onUpdate)

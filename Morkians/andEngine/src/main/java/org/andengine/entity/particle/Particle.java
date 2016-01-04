@@ -5,6 +5,8 @@ import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.opengl.util.GLState;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -76,8 +78,8 @@ public class Particle<T extends IEntity> {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected void onUpdate(final float pSecondsElapsed) {
-		if (!this.mExpired) {
+	protected void onUpdate(final float pSecondsElapsed) throws IOException {
+		if (!this.mExpired)
 			if (this.mExpireTime == Particle.EXPIRETIME_NEVER || this.mLifeTime + pSecondsElapsed < this.mExpireTime) {
 				/* Particle doesn't expire or didn't expire yet. */
 				this.mLifeTime += pSecondsElapsed;
@@ -90,7 +92,6 @@ public class Particle<T extends IEntity> {
 				this.mPhysicsHandler.onUpdate(secondsElapsedUsed);
 				this.setExpired(true);
 			}
-		}
 	}
 
 	public void onDraw(final GLState pGLState, final Camera pCamera) {

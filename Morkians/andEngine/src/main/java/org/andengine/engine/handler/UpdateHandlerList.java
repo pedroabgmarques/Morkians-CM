@@ -2,6 +2,8 @@ package org.andengine.engine.handler;
 
 import org.andengine.util.adt.list.SmartList;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -41,7 +43,7 @@ public class UpdateHandlerList extends SmartList<IUpdateHandler> implements IUpd
 	// ===========================================================
 
 	@Override
-	public void onUpdate(final float pSecondsElapsed) {
+	public void onUpdate(final float pSecondsElapsed) throws IOException {
 		final int handlerCount = this.size();
 		for (int i = handlerCount - 1; i >= 0; i--) {
 			this.get(i).onUpdate(pSecondsElapsed);

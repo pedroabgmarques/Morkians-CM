@@ -1,5 +1,7 @@
 package org.andengine.entity.scene;
 
+import android.util.SparseArray;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.runnable.RunnableHandler;
 import org.andengine.entity.Entity;
@@ -14,7 +16,7 @@ import org.andengine.util.Constants;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.adt.list.SmartList;
 
-import android.util.SparseArray;
+import java.io.IOException;
 
 /**
  * (c) 2010 Nicolas Gramlich
@@ -272,7 +274,7 @@ public class Scene extends Entity {
 	}
 
 	@Override
-	protected void onManagedUpdate(final float pSecondsElapsed) {
+	protected void onManagedUpdate(final float pSecondsElapsed) throws IOException {
 		this.mSecondsElapsedTotal += pSecondsElapsed;
 
 		this.mRunnableHandler.onUpdate(pSecondsElapsed);

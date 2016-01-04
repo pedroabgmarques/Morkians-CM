@@ -12,6 +12,8 @@ import org.andengine.util.adt.transformation.Transformation;
 import org.andengine.util.algorithm.collision.EntityCollisionChecker;
 import org.andengine.util.math.MathUtils;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -241,7 +243,7 @@ public class Camera implements IUpdateHandler {
 	// ===========================================================
 
 	@Override
-	public void onUpdate(final float pSecondsElapsed) {
+	public void onUpdate(final float pSecondsElapsed) throws IOException {
 		if (this.mUpdateHandlers != null) {
 			this.mUpdateHandlers.onUpdate(pSecondsElapsed);
 		}

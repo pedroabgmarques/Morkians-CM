@@ -1,5 +1,6 @@
 package org.andengine.engine;
 
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -571,6 +572,8 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 
 				this.mEngineLock.notifyCanDraw();
 				this.mEngineLock.waitUntilCanUpdate();
+			} catch (IOException e) {
+				e.printStackTrace();
 			} finally {
 				this.mEngineLock.unlock();
 			}
@@ -595,7 +598,7 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 		}
 	}
 
-	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException {
+	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException, IOException {
 		final float pSecondsElapsed = pNanosecondsElapsed * TimeConstants.SECONDS_PER_NANOSECOND;
 
 		this.mSecondsElapsedTotal += pSecondsElapsed;
@@ -606,14 +609,14 @@ public class Engine implements SensorEventListener, OnTouchListener, ITouchEvent
 		this.onUpdateScene(pSecondsElapsed);
 	}
 
-	protected void onUpdateScene(final float pSecondsElapsed) {
+	protected void onUpdateScene(final float pSecondsElapsed) throws IOException {
 		if (this.mScene != null) {
 			this.mScene.onUpdate(pSecondsElapsed);
 		}
 		this.getCamera().onUpdate(pSecondsElapsed);
 	}
 
-	protected void onUpdateUpdateHandlers(final float pSecondsElapsed) {
+	protected void onUpdateUpdateHandlers(final float pSecondsElapsed) throws IOException {
 		this.mUpdateThreadRunnableHandler.onUpdate(pSecondsElapsed);
 		this.mUpdateHandlers.onUpdate(pSecondsElapsed);
 	}

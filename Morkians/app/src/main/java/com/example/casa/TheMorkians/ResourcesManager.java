@@ -1,5 +1,7 @@
 package com.example.casa.TheMorkians;
 
+import org.andengine.audio.music.Music;
+import org.andengine.audio.sound.Sound;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
@@ -9,6 +11,8 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+
+import java.io.IOException;
 
 
 /**
@@ -58,6 +62,12 @@ public class ResourcesManager {
     private BitmapTextureAtlas gameVirtualJoystickAtlas;
     private BitmapTextureAtlas gameLevelAtlas;
 
+    public Sound soundExplosion;
+    public Sound soundShoot;
+
+    public Music mainMenuMusic;
+    public Music levelMusic;
+
     //---------------------------------------------
     // TEXTURES & TEXTURE REGIONS
     //---------------------------------------------
@@ -73,8 +83,7 @@ public class ResourcesManager {
         loadMenuFonts();
     }
 
-    public void loadGameResources()
-    {
+    public void loadGameResources() throws IOException {
         loadGameGraphics();
         loadGameFonts();
         loadGameAudio();
@@ -84,7 +93,7 @@ public class ResourcesManager {
     {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
         MenuTextureAtlas =  new BitmapTextureAtlas (activity.getTextureManager(), 1024, 1024, TextureOptions. BILINEAR ) ;
-        menuBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(MenuTextureAtlas, activity, "menu_background.png", 112, 0);
+        menuBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(MenuTextureAtlas,activity, "menu_background.png", 112, 0);
         playRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(MenuTextureAtlas, activity, "new_game.png", 0, 481);
         MenuTextureAtlas.load();
     }
@@ -156,10 +165,19 @@ public class ResourcesManager {
 
     }
 
-    private void loadGameAudio()
-    {
+    private void loadGameAudio() throws IOException {
+
+
+        //mainMenuMusic = MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
+        //levelMusic=MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
+
+        //SoundFactory.setAssetBasePath("mfx/");
+        //soundExplosion=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
+        //soundExplosion=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
 
     }
+
+
 
     public void loadSplashScreen()
     {

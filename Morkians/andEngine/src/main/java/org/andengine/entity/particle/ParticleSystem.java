@@ -1,7 +1,5 @@
 package org.andengine.entity.particle;
 
-import java.util.ArrayList;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
@@ -11,8 +9,10 @@ import org.andengine.entity.particle.initializer.IParticleInitializer;
 import org.andengine.entity.particle.modifier.IParticleModifier;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.Constants;
-import org.andengine.util.adt.array.ArrayUtils;
 import org.andengine.util.math.MathUtils;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * (c) 2010 Nicolas Gramlich
@@ -111,7 +111,7 @@ public class ParticleSystem<T extends IEntity> extends Entity {
 	}
 
 	@Override
-	protected void onManagedUpdate(final float pSecondsElapsed) {
+	protected void onManagedUpdate(final float pSecondsElapsed) throws IOException {
 		super.onManagedUpdate(pSecondsElapsed);
 
 		if (this.isParticlesSpawnEnabled()) {

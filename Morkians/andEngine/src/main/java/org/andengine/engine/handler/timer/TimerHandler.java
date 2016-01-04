@@ -2,6 +2,8 @@ package org.andengine.engine.handler.timer;
 
 import org.andengine.engine.handler.IUpdateHandler;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -79,7 +81,7 @@ public class TimerHandler implements IUpdateHandler {
 	// ===========================================================
 
 	@Override
-	public void onUpdate(final float pSecondsElapsed) {
+	public void onUpdate(final float pSecondsElapsed) throws IOException {
 		if (this.mAutoReset) {
 			this.mTimerSecondsElapsed += pSecondsElapsed;
 			while (this.mTimerSecondsElapsed >= this.mTimerSeconds) {

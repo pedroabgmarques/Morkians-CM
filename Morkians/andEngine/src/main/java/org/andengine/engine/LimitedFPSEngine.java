@@ -3,6 +3,8 @@ package org.andengine.engine;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.util.time.TimeConstants;
 
+import java.io.IOException;
+
 /**
  * A subclass of {@link Engine} that tries to achieve a specific amount of
  * updates per second. When the time since the last update is bigger long the
@@ -44,7 +46,7 @@ public class LimitedFPSEngine extends Engine {
 	// ===========================================================
 
 	@Override
-	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException {
+	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException, IOException {
 		final long preferredFrameLengthNanoseconds = this.mPreferredFrameLengthNanoseconds;
 		final long deltaFrameLengthNanoseconds = preferredFrameLengthNanoseconds - pNanosecondsElapsed;
 

@@ -3,6 +3,8 @@ package org.andengine.engine;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.util.time.TimeConstants;
 
+import java.io.IOException;
+
 
 /**
  * A subclass of {@link Engine} that tries to achieve a specific amount of updates per second.
@@ -45,7 +47,7 @@ public class FixedStepEngine extends Engine {
 	// ===========================================================
 
 	@Override
-	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException {
+	public void onUpdate(final long pNanosecondsElapsed) throws InterruptedException, IOException {
 		this.mSecondsElapsedAccumulator += pNanosecondsElapsed;
 
 		final long stepLength = this.mStepLength;

@@ -5,6 +5,8 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface;
 
+import java.io.IOException;
+
 /**
  * Created by PedroMarques on 29-12-2015.
  */
@@ -119,8 +121,7 @@ public class    SceneManager {
         ResourcesManager.getInstance().unloadMenuTextures();
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
         {
-            public void onTimePassed(final TimerHandler pTimerHandler)
-            {
+            public void onTimePassed(final TimerHandler pTimerHandler) throws IOException {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameResources();
                 gameScene = new GameScene();

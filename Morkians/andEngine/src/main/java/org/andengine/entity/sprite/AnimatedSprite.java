@@ -8,6 +8,8 @@ import org.andengine.opengl.vbo.DrawType;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.time.TimeConstants;
 
+import java.io.IOException;
+
 /**
  * (c) 2010 Nicolas Gramlich
  * (c) 2011 Zynga Inc.
@@ -102,7 +104,7 @@ public class AnimatedSprite extends TiledSprite {
 	// ===========================================================
 
 	@Override
-	protected void onManagedUpdate(final float pSecondsElapsed) {
+	protected void onManagedUpdate(final float pSecondsElapsed) throws IOException {
 		super.onManagedUpdate(pSecondsElapsed);
 
 		if (this.mAnimationRunning) {

@@ -1,5 +1,7 @@
 package org.andengine.entity.text;
 
+import android.opengl.GLES20;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.text.exception.OutOfCharactersException;
 import org.andengine.opengl.font.IFont;
@@ -7,7 +9,7 @@ import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.align.HorizontalAlign;
 
-import android.opengl.GLES20;
+import java.io.IOException;
 
 /**
  * (c) 2010 Nicolas Gramlich
@@ -89,7 +91,7 @@ public class TickerText extends Text {
 	// ===========================================================
 
 	@Override
-	protected void onManagedUpdate(final float pSecondsElapsed) {
+	protected void onManagedUpdate(final float pSecondsElapsed) throws IOException {
 		super.onManagedUpdate(pSecondsElapsed);
 
 		if (this.mTickerTextOptions.mReverse) {

@@ -1,7 +1,5 @@
 package com.example.casa.TheMorkians;
 
-import android.util.Log;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -117,6 +115,9 @@ public class GameScene extends BaseScene{
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
+        resourcesManager.levelMusic.play();
+
+
         //A linha abaixo faz a camara seguir o jogador
         //camera.setChaseEntity(player);
 
@@ -163,6 +164,7 @@ public class GameScene extends BaseScene{
 
         attachChild(kamikazeEnemy);
         enemyList.add(kamikazeEnemy);
+
 
 
 
