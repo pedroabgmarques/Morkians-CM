@@ -33,6 +33,7 @@ public class ResourcesManager {
     public Camera camera;
     public VertexBufferObjectManager vbom;
     public Font font;
+    public int score;
 
     public ITextureRegion loadMenuRegion;
 
@@ -189,7 +190,7 @@ public class ResourcesManager {
     private void loadShootSound()throws IOException
     {
         SoundFactory.setAssetBasePath("mfx/musica/");
-        soundShoot=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
+        soundShoot=SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "lightsaber_01.wav");
 
 
     }
@@ -215,7 +216,14 @@ public class ResourcesManager {
     {
         loadMenuTextureAtlas.unload();
         loadMenuRegion = null;
+    }
 
+    public void loadFinishScreen(){
+        loadSplashScreen();
+    }
+
+    public void unloadFinishScreen(){
+        unloadSplashScreen();
     }
 
     public void unloadMenuTextures()

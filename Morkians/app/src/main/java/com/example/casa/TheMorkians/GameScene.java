@@ -34,7 +34,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private HUD gameHUD;
     private Text scoreText;
-    private int score;
     private Player player;
     private PhysicsHandler playerPhysicsHandler;
     private ArrayList<Enemy> enemyList;
@@ -48,8 +47,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private void addToScore(int i)
     {
-        score += i;
-        scoreText.setText("Score: " + score);
+        resourcesManager.score += i;
+        scoreText.setText("Score: " + resourcesManager.score);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         enemyList=new ArrayList<Enemy>();
         InimigosRemover = new ArrayList<Enemy>();
-        score=0;
+        resourcesManager.score = 0;
         BalaManager.Initialize();
         createBackground();
         createHUD();
@@ -79,8 +78,9 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     {
 
         SceneManager.getInstance().loadMenuScene(engine);
-        resourcesManager.mainMenuMusic.play();
         resourcesManager.levelMusic.stop();
+        resourcesManager.mainMenuMusic.play();
+
     }
 
     @Override
@@ -122,7 +122,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         // CREATE SCORE TEXT
         scoreText = new Text(20, 420, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 0);
-        scoreText.setText("Score: "+score);
+        scoreText.setText("Score: " + resourcesManager.score);
         gameHUD.attachChild(scoreText);
 
         camera.setHUD(gameHUD);
@@ -411,6 +411,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         player=null;
                         detachChild(bala);
                         balasAremoverEnemy.add(bala);
+<<<<<<< HEAD
 
                         TimerHandler timerHandler=new TimerHandler(2, false, new ITimerCallback() {
                             @Override
@@ -422,6 +423,9 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
                         registerUpdateHandler(timerHandler);
 
+=======
+                        SceneManager.getInstance().createFinishScene();
+>>>>>>> 8f70fe5d79bab0973100cbdd50525da996e8ee37
                     }
                 }
 
@@ -460,6 +464,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
+<<<<<<< HEAD
 
                         ExplodeStuff(posPlayX, posPlayY);
                         ExplodeStuff(posEnemX, posEnemY);
@@ -472,6 +477,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         });
                         registerUpdateHandler(timerHandler);
 
+=======
+                        SceneManager.getInstance().createFinishScene();
+                        //onBackKeyPressed();
+>>>>>>> 8f70fe5d79bab0973100cbdd50525da996e8ee37
                     }
                 }
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
