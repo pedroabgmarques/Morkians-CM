@@ -174,12 +174,17 @@ public class GameScene extends BaseScene{
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
 
-                    for (Enemy enemy :enemyList
-                            )
-                    {
-                        Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
-                        attachChild(bala);
-                    }
+                        for (Enemy enemy :enemyList
+                                )
+                        {
+                            Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
+                            if(!bala.hasParent()){
+                                attachChild(bala);
+                            }
+                        }
+
+                        //Remover balas que saem do ecrã
+                        BalaManager.RemoveBalas();
 
                     }
                 });
