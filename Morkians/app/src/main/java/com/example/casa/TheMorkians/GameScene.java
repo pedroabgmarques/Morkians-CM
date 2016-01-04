@@ -46,6 +46,7 @@ public class GameScene extends BaseScene{
     public void createScene() {
 
         enemyList=new ArrayList<>();
+        BalaManager.Initialize();
         createBackground();
         createHUD();
         createControls();
@@ -54,10 +55,6 @@ public class GameScene extends BaseScene{
         addHeavyBomberEnemyHandler();
         addObjectsInTheScene();
         createLevel();
-
-
-        
-
 
     }
 
@@ -161,33 +158,26 @@ public class GameScene extends BaseScene{
 
         attachChild(kamikazeEnemy);
         enemyList.add(kamikazeEnemy);
-
-
-
-
         addShoot();
     }
     private void addShoot()
     {
-        IUpdateHandler shootIUpdateHandler =new IUpdateHandler() {
-            @Override
-            public void onUpdate(float pSecondsElapsed)
-            {
-                for (Enemy enemy :enemyList
-                        )
-                {
+        TimerHandler timerHandler = new TimerHandler(3, true,
+                new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
 
-                    enemy.shoot(enemy.getX(), enemy.getY());
-                }
+                    for (Enemy enemy :enemyList
+                            )
+                    {
+                        Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
+                        attachChild(bala);
+                    }
 
-            }
+                    }
+                });
 
-            @Override
-            public void reset() {
-
-            }
-        };
-
+        registerUpdateHandler(timerHandler);
 
     }
     private void createNewBomberEnemy()
