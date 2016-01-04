@@ -32,7 +32,7 @@ public class BalaManager {
         listaBalasEnemyMortas = new ArrayList<Bala>();
         listaBalasEnemyVivas = new ArrayList<Bala>();
         listaBalasPlayerMortas = new ArrayList<Bala>();
-        listaBalasEnemyVivas = new ArrayList<Bala>();
+        listaBalasPlayerVivas = new ArrayList<Bala>();
         listaBalasRemover = new ArrayList<Bala>();
 
         //criar à partida 100 balas
@@ -90,8 +90,38 @@ public class BalaManager {
     }
 
     public static void RemoveBalas(){
-        for(Sprite bala: listaBalasEnemyVivas){
-
+        listaBalasRemover.clear();
+        if(listaBalasEnemyVivas.size() > 0){
+            for(Bala bala: listaBalasEnemyVivas){
+                if(bala.getX()<=camera.getCenterX()-camera.getWidth()/2+bala.getWidth()/2){
+                    listaBalasRemover.add(bala);
+                }
+            }
         }
+
+        if(listaBalasRemover.size() > 0){
+            for(Bala bala: listaBalasRemover){
+                listaBalasEnemyVivas.remove(bala);
+                listaBalasEnemyMortas.add(bala);
+            }
+        }
+
+        if(listaBalasPlayerVivas.size() > 0){
+            listaBalasRemover.clear();
+            for(Bala bala: listaBalasPlayerVivas){
+                if(bala.getX()>=camera.getCenterX()-camera.getWidth()/2+bala.getWidth()/2){
+                    listaBalasRemover.add(bala);
+                }
+            }
+        }
+
+        if(listaBalasRemover.size() > 0){
+            for(Bala bala: listaBalasRemover){
+                listaBalasPlayerVivas.remove(bala);
+                listaBalasPlayerMortas.add(bala);
+            }
+        }
+
+
     }
 }
