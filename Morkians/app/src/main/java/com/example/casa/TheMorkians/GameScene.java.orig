@@ -407,10 +407,11 @@ public class GameScene extends BaseScene{
                         detachChild(enemy);
                     }
                 }
+<<<<<<< HEAD
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
                 listaBalasEnemy.removeAll(balasAremoverEnemy);
                 enemyList.removeAll(inimigosAremover);
-
+=======
 
                 //Remover balas que saem do ecrã
                 BalaManager.RemoveBalas();
@@ -426,6 +427,7 @@ public class GameScene extends BaseScene{
                     detachChild(inimigo);
                 }
                 InimigosRemover.clear();
+>>>>>>> 4155e8a7a22dd02dd8ccebcb0d8c2dc956d58ddb
             }
 
             @Override
