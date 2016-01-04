@@ -23,6 +23,7 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -33,7 +34,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private HUD gameHUD;
     private Text scoreText;
-    private int score;
     private Player player;
     private PhysicsHandler playerPhysicsHandler;
     private ArrayList<Enemy> enemyList;
@@ -50,8 +50,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private void addToScore(int i)
     {
-        score += i;
-        scoreText.setText("Score: " + score);
+        resourcesManager.score += i;
+        scoreText.setText("Score: " + resourcesManager.score);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         enemyList=new ArrayList<Enemy>();
         InimigosRemover = new ArrayList<Enemy>();
-        score=0;
+        resourcesManager.score = 0;
         BalaManager.Initialize();
         createBackground();
         createHUD();
@@ -81,8 +81,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     {
 
         SceneManager.getInstance().loadMenuScene(engine);
-        resourcesManager.mainMenuMusic.play();
         resourcesManager.levelMusic.stop();
+
     }
 
     @Override
@@ -94,7 +94,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     public void disposeScene() {
         camera.setHUD(null);
         camera.setCenter(400, 240);
-        resourcesManager.mainMenuMusic.play();
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.
@@ -144,7 +143,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         // CREATE SCORE TEXT
         scoreText = new Text(20, 420, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 0);
-        scoreText.setText("Score: "+score);
+        scoreText.setText("Score: " + resourcesManager.score);
         gameHUD.attachChild(scoreText);
 
         camera.setHUD(gameHUD);
@@ -214,10 +213,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         kamikazeEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=10;
+        int velocity = 5;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                kamikazeEnemy.getX(), -kamikazeEnemy.getWidth());
+                kamikazeEnemy.getX(), kamikazeEnemy.getX() - 1000);
         kamikazeEnemy.registerEntityModifier(moveXModifier);
         MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
                 kamikazeEnemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*kamikazeEnemy.getX());
@@ -263,10 +262,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         bomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=12;
+        int velocity = 10;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                bomberEnemy.getX(), -bomberEnemy.getWidth());
+                bomberEnemy.getX(), bomberEnemy.getX() - 1000);
         bomberEnemy.registerEntityModifier(moveXModifier);
 
         enemyList.add(bomberEnemy);
@@ -288,10 +287,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         heavyBomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(6) + 2;
-        int velocity=17;
+        int velocity = 15;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                heavyBomberEnemy.getX(), -heavyBomberEnemy.getWidth());
+                heavyBomberEnemy.getX(), heavyBomberEnemy.getX() - 1000);
         heavyBomberEnemy.registerEntityModifier(moveXModifier);
         //heavyBomberEnemy.shoot(heavyBomberEnemy.getX(),heavyBomberEnemy.getY());
 
@@ -428,10 +427,29 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                 {
                     if(player != null && bala.collidesWith(player))
                     {
+                        float posPlayX,posPlayY;
+                        posPlayX=player.getX();
+                        posPlayY=player.getY();
+                        ExplodeStuff(posPlayX, posPlayY);
+
                         detachChild(player);
+                        player=null;
+                        detachChild(bala);
                         balasAremoverEnemy.add(bala);
 
-                        onBackKeyPressed();
+
+                        TimerHandler timerHandler=new TimerHandler(2, false, new ITimerCallback() {
+                            @Override
+                            public void onTimePassed(TimerHandler pTimerHandler) throws IOException
+                            {
+                                SceneManager.getInstance().createFinishScene();
+                            }
+                        });
+
+                        registerUpdateHandler(timerHandler);
+
+
+
                     }
                 }
 
@@ -460,11 +478,33 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                 {
                     if(player != null && enemy.collidesWith(player))
                     {
+                        float posPlayX,posPlayY,posEnemX,posEnemY;
+                        posPlayX=player.getX();
+                        posPlayY=player.getY();
+                        posEnemX=enemy.getX();
+                        posEnemY=enemy.getY();
+
                         detachChild(player);
                         player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
-                        onBackKeyPressed();
+
+
+                        ExplodeStuff(posPlayX, posPlayY);
+                        ExplodeStuff(posEnemX, posEnemY);
+                        TimerHandler timerHandler=new TimerHandler(2,false, new ITimerCallback() {
+                            @Override
+                            public void onTimePassed(TimerHandler pTimerHandler) throws IOException
+                            {
+                                SceneManager.getInstance().createFinishScene();
+                            }
+                        });
+                        registerUpdateHandler(timerHandler);
+
+
+
+                        //onBackKeyPressed();
+
                     }
                 }
                 listaBalasPlayer.removeAll(balasAremoverPlayer);

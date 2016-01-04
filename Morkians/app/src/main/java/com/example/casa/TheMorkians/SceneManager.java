@@ -19,6 +19,7 @@ public class    SceneManager {
     private BaseScene menuScene;
     private BaseScene gameScene;
     private BaseScene loadingScene;
+    private BaseScene finishScene;
 
     //---------------------------------------------
     // VARIABLES
@@ -38,6 +39,7 @@ public class    SceneManager {
         SCENE_MENU,
         SCENE_GAME,
         SCENE_LOADING,
+        SCENE_FINISH
     }
 
     //---------------------------------------------
@@ -67,6 +69,8 @@ public class    SceneManager {
             case SCENE_LOADING:
                 setScene(loadingScene);
                 break;
+            case SCENE_FINISH:
+                setScene(finishScene);
             default:
                 break;
         }
@@ -138,10 +142,19 @@ public class    SceneManager {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuTextures();
                 ResourcesManager.getInstance().loadMenuResources();
-
                 setScene(menuScene);
+                ResourcesManager.getInstance().mainMenuMusic.play();
 
             }
         }));
+    }
+
+    public void createFinishScene()
+    {
+        ResourcesManager.getInstance().loadFinishScreen();
+        finishScene = new FinishScene();
+        setScene(finishScene);
+        gameScene.disposeScene();
+        ResourcesManager.getInstance().unloadGameTextures();
     }
 }
