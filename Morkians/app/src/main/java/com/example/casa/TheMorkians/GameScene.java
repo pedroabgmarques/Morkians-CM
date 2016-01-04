@@ -13,6 +13,7 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -27,7 +28,7 @@ import java.util.Random;
 /**
  * Created by PedroMarques on 30-12-2015.
  */
-public class GameScene extends BaseScene{
+public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private HUD gameHUD;
     private Text scoreText;
@@ -130,7 +131,7 @@ public class GameScene extends BaseScene{
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
-
+        setOnSceneTouchListener(resourcesManager.activity);
         colisions();
 
         //A linha abaixo faz a camara seguir o jogador
@@ -157,6 +158,16 @@ public class GameScene extends BaseScene{
 
 
         attachChild(player);
+    }
+
+    @Override
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+        if (pSceneTouchEvent.isActionDown())
+        {
+            Bala novaBala = BalaManager.shootBalaPlayer(player.getX(), player.getY());
+            return true;
+        }
+        return false;
     }
 
     private void createNewEnemy()
