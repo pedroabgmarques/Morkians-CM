@@ -65,11 +65,8 @@ public class BalaManager {
         Log.v("debug", "Vivas: " + listaBalasEnemyVivas.size());
         Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
 
-        bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
-        MoveXModifier moveXModifier = new MoveXModifier(50f, pX, -camera.getWidth() );
-        bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
         bala.setScale(0.5f);
         resourcesManager.soundShoot.play();
@@ -103,7 +100,7 @@ public class BalaManager {
         listaBalasRemover.clear();
         listaBalasDetach.clear();
         for(Bala bala: listaBalasEnemyVivas){
-            if(bala.getX()<=camera.getCenterX() /*-camera.getWidth()/2*/){
+            if(bala.getX()<=camera.getCenterX() -camera.getWidth()/2){
                 listaBalasRemover.add(bala);
             }
         }

@@ -61,7 +61,7 @@ public class GameScene extends BaseScene{
         addEnemyHandler();
         addBomberEnemyHandler();
         addHeavyBomberEnemyHandler();
-        //addObjectsInTheScene();
+        addObjectsInTheScene();
         createLevel();
         resourcesManager.levelMusic.play();
         resourcesManager.mainMenuMusic.stop();
@@ -162,7 +162,7 @@ public class GameScene extends BaseScene{
     private void createNewEnemy()
     {
         Random enemyRandom = new Random();
-        int x = (int)(camera.getCenterX()+ camera.getWidth()/2-50 /*+ resourcesManager.gameKamikazeRegion.getWidth()*/);
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameKamikazeRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameKamikazeRegion.getHeight()));
 
         kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom, resourcesManager);
@@ -210,7 +210,7 @@ public class GameScene extends BaseScene{
     {
 
         Random enemyRandom = new Random();
-        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 -50/*+ resourcesManager.gameBomberRegion.getWidth()*/);
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameBomberRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameBomberRegion.getHeight()));
 
         bomberEnemy = new Enemy(x, y, resourcesManager.gameBomberRegion, vbom, resourcesManager);
@@ -235,7 +235,7 @@ public class GameScene extends BaseScene{
     private void createNewHeavyBomberEnemy()
     {
         Random enemyRandom= new Random();
-        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 - 50 /*+ resourcesManager.gameHeavyBomberRegion.getWidth()*/);
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameHeavyBomberRegion.getWidth());
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameHeavyBomberRegion.getHeight()));
 
         heavyBomberEnemy=new Enemy(x,y,resourcesManager.gameHeavyBomberRegion,vbom, resourcesManager);
@@ -416,6 +416,10 @@ public class GameScene extends BaseScene{
                 listaBalasEnemy.removeAll(balasAremoverEnemy);
                 enemyList.removeAll(inimigosAremover);
 
+                //Mover balas
+                for(Bala bala: BalaManager.getBalasInimigo()){
+                    bala.setPosition(bala.getX() - 3, bala.getY());
+                }
 
                 //Remover balas que saem do ecrã
                 BalaManager.RemoveBalas();
@@ -426,7 +430,7 @@ public class GameScene extends BaseScene{
 
                 //Remover inimigos que saem do ecrã
                 for(Enemy inimigo: enemyList){
-                    if(inimigo.getX() < camera.getCenterX() /*- camera.getWidth() - inimigo.getWidth() / 2*/){
+                    if(inimigo.getX() < camera.getCenterX() - camera.getWidth() - inimigo.getWidth() / 2){
                         InimigosRemover.add(inimigo);
                     }
                 }
