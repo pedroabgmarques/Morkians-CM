@@ -18,6 +18,7 @@ public class BalaManager {
     private static ArrayList<Bala> listaBalasPlayerMortas;
     private static ArrayList<Bala> listaBalasEnemyVivas;
     private static ArrayList<Bala> listaBalasEnemyMortas;
+    public static ArrayList<Bala> listaBalasDetach;
 
     private static ArrayList<Bala> listaBalasRemover;
 
@@ -36,6 +37,7 @@ public class BalaManager {
         listaBalasPlayerMortas = new ArrayList<Bala>();
         listaBalasPlayerVivas = new ArrayList<Bala>();
         listaBalasRemover = new ArrayList<Bala>();
+        listaBalasDetach = new ArrayList<Bala>();
 
         //criar à partida 100 balas
         for(int i = 0; i < 100; i++){
@@ -61,13 +63,11 @@ public class BalaManager {
         bala = listaBalasEnemyMortas.get(0);
         listaBalasEnemyMortas.remove(bala);
 
-        Log.v("debug", "Bala adicionada!");
-        Log.v("debug", "Vivas: "+ listaBalasEnemyVivas.size());
-        Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
+
 
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX + camera.getCenterX() - camera.getWidth() / 2, -camera.getWidth() );
+        MoveXModifier moveXModifier = new MoveXModifier(10f, pX , -camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
         bala.setScale(0.5f);
@@ -99,11 +99,14 @@ public class BalaManager {
     public static void RemoveBalas(){
 
         listaBalasRemover.clear();
+        //listaBalasDetach.clear();
         for(Bala bala: listaBalasEnemyVivas){
-            if(bala.getX()<=camera.getCenterX()-camera.getWidth()/2){
+            if(bala.getX()<=camera.getCenterX() /*-camera.getWidth()/2*/){
                 listaBalasRemover.add(bala);
             }
         }
+
+        //listaBalasDetach.addAll(listaBalasRemover);
 
         for(Bala bala: listaBalasRemover){
             listaBalasEnemyVivas.remove(bala);
@@ -121,6 +124,8 @@ public class BalaManager {
             listaBalasPlayerVivas.remove(bala);
             listaBalasPlayerMortas.add(bala);
         }
+
+        listaBalasDetach.addAll(listaBalasRemover);
 
     }
 }
