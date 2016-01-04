@@ -1,10 +1,7 @@
 package com.example.casa.TheMorkians;
 
-<<<<<<< HEAD
-=======
-import android.widget.Toast;
 
->>>>>>> ce2caec5accbb25cd5be65f56c67d986a8129bea
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -22,7 +19,6 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -121,13 +117,13 @@ public class GameScene extends BaseScene{
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
-<<<<<<< HEAD
-        resourcesManager.levelMusic.play();
 
 
-=======
+
+
+
         colisions();
->>>>>>> ce2caec5accbb25cd5be65f56c67d986a8129bea
+
         //A linha abaixo faz a camara seguir o jogador
         //camera.setChaseEntity(player);
 
@@ -146,6 +142,7 @@ public class GameScene extends BaseScene{
         };
 
         registerUpdateHandler(cameraUpdateHandler);
+        resourcesManager.levelMusic.play();
         attachChild(player);
     }
 
@@ -174,14 +171,14 @@ public class GameScene extends BaseScene{
 
         attachChild(kamikazeEnemy);
         enemyList.add(kamikazeEnemy);
-<<<<<<< HEAD
 
 
 
 
 
-=======
->>>>>>> ce2caec5accbb25cd5be65f56c67d986a8129bea
+
+
+
         addShoot();
     }
     private void addShoot()

@@ -1,6 +1,7 @@
 package com.example.casa.TheMorkians;
 
 import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
@@ -167,9 +168,9 @@ public class ResourcesManager {
 
     private void loadGameAudio() throws IOException {
 
-
+        MusicFactory.setAssetBasePath("mfx/");
         //mainMenuMusic = MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
-        //levelMusic=MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
+        levelMusic=MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
 
         //SoundFactory.setAssetBasePath("mfx/");
         //soundExplosion=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
