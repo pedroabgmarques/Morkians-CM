@@ -186,10 +186,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         kamikazeEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=10;
+        int velocity = 5;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                kamikazeEnemy.getX(), -kamikazeEnemy.getWidth());
+                kamikazeEnemy.getX(), kamikazeEnemy.getX() - 1000);
         kamikazeEnemy.registerEntityModifier(moveXModifier);
         MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
                 kamikazeEnemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*kamikazeEnemy.getX());
@@ -235,10 +235,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         bomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=12;
+        int velocity = 10;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                bomberEnemy.getX(), -bomberEnemy.getWidth());
+                bomberEnemy.getX(), bomberEnemy.getX() - 1000);
         bomberEnemy.registerEntityModifier(moveXModifier);
 
         enemyList.add(bomberEnemy);
@@ -260,10 +260,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         heavyBomberEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(6) + 2;
-        int velocity=17;
+        int velocity = 15;
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                heavyBomberEnemy.getX(), -heavyBomberEnemy.getWidth());
+                heavyBomberEnemy.getX(), heavyBomberEnemy.getX() - 1000);
         heavyBomberEnemy.registerEntityModifier(moveXModifier);
         //heavyBomberEnemy.shoot(heavyBomberEnemy.getX(),heavyBomberEnemy.getY());
 
