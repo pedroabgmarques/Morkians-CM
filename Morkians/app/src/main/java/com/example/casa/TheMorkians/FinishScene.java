@@ -11,6 +11,7 @@ import org.andengine.util.adt.align.HorizontalAlign;
 public class FinishScene extends BaseScene {
     private Sprite loadImage;
     private Text scoreText;
+    private Text finishText;
 
 
     @Override
@@ -27,11 +28,18 @@ public class FinishScene extends BaseScene {
 
         attachChild(scoreText);
 
+        finishText = new Text(100, 420, resourcesManager.font2, "So close..\nUnfortunately you failed \nand Earth was destroyed.\nBetter luck next time!", new TextOptions(HorizontalAlign.CENTER), vbom);
+        finishText.setPosition(400, 180);
+        finishText.setText("So close..\bUnfortunately you failed \nand Earth was destroyed.\nBetter luck next time!");
+
+        attachChild(finishText);
+
     }
 
     @Override
     public void onBackKeyPressed() {
         SceneManager.getInstance().loadMenuScene(engine);
+        resourcesManager.levelMusic.stop();
     }
 
     @Override

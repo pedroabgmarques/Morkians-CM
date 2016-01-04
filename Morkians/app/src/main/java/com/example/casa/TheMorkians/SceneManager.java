@@ -143,6 +143,7 @@ public class    SceneManager {
                 ResourcesManager.getInstance().loadMenuTextures();
                 ResourcesManager.getInstance().loadMenuResources();
                 setScene(menuScene);
+                ResourcesManager.getInstance().mainMenuMusic.play();
 
             }
         }));
