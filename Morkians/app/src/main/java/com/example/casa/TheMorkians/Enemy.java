@@ -26,12 +26,8 @@ public class Enemy extends Sprite
 
     public void shoot(final float positionX, final float positionY)
     {
-
         novaBala=new Bala(positionX, positionY, resourcesManager.gameEnemyLaserRegion,getVertexBufferObjectManager(),resourcesManager.camera);
         novaBala.setScale(0.5f);
-        attachChild(novaBala);
-
-
     }
 
 }
