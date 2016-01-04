@@ -437,7 +437,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
-
+                        onBackKeyPressed();
                     }
                 }
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
