@@ -1,5 +1,7 @@
 package com.example.casa.TheMorkians;
 
+import android.util.Log;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.Scene;
@@ -58,9 +60,14 @@ public class BalaManager {
     public static Bala shootBalaInimigo(float pX, float pY){
         bala = listaBalasEnemyMortas.get(0);
         listaBalasEnemyMortas.remove(bala);
+
+        Log.v("debug", "Bala adicionada!");
+        Log.v("debug", "Vivas: "+ listaBalasEnemyVivas.size());
+        Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
+
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX, -camera.getWidth() );
+        MoveXModifier moveXModifier = new MoveXModifier(10f, pX + camera.getCenterX() - camera.getWidth() / 2, -camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
         bala.setScale(0.5f);
@@ -72,7 +79,7 @@ public class BalaManager {
         listaBalasPlayerMortas.remove(bala);
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX, camera.getWidth() );
+        MoveXModifier moveXModifier = new MoveXModifier(10f, pX + camera.getCenterX() - camera.getWidth() / 2, camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasPlayerVivas.add(bala);
         bala.setScale(0.5f);
@@ -90,38 +97,30 @@ public class BalaManager {
     }
 
     public static void RemoveBalas(){
+
         listaBalasRemover.clear();
-        if(listaBalasEnemyVivas.size() > 0){
-            for(Bala bala: listaBalasEnemyVivas){
-                if(bala.getX()<=camera.getCenterX()-camera.getWidth()/2+bala.getWidth()/2){
-                    listaBalasRemover.add(bala);
-                }
+        for(Bala bala: listaBalasEnemyVivas){
+            if(bala.getX()<=camera.getCenterX()-camera.getWidth()/2){
+                listaBalasRemover.add(bala);
             }
         }
 
-        if(listaBalasRemover.size() > 0){
-            for(Bala bala: listaBalasRemover){
-                listaBalasEnemyVivas.remove(bala);
-                listaBalasEnemyMortas.add(bala);
+        for(Bala bala: listaBalasRemover){
+            listaBalasEnemyVivas.remove(bala);
+            listaBalasEnemyMortas.add(bala);
+        }
+
+        listaBalasRemover.clear();
+        for(Bala bala: listaBalasPlayerVivas){
+            if(bala.getX()>=camera.getCenterX()-camera.getWidth()/2){
+                listaBalasRemover.add(bala);
             }
         }
 
-        if(listaBalasPlayerVivas.size() > 0){
-            listaBalasRemover.clear();
-            for(Bala bala: listaBalasPlayerVivas){
-                if(bala.getX()>=camera.getCenterX()-camera.getWidth()/2+bala.getWidth()/2){
-                    listaBalasRemover.add(bala);
-                }
-            }
+        for(Bala bala: listaBalasRemover){
+            listaBalasPlayerVivas.remove(bala);
+            listaBalasPlayerMortas.add(bala);
         }
-
-        if(listaBalasRemover.size() > 0){
-            for(Bala bala: listaBalasRemover){
-                listaBalasPlayerVivas.remove(bala);
-                listaBalasPlayerMortas.add(bala);
-            }
-        }
-
 
     }
 }

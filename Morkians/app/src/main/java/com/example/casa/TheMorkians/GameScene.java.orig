@@ -63,9 +63,6 @@ public class GameScene extends BaseScene{
         addHeavyBomberEnemyHandler();
         addObjectsInTheScene();
         createLevel();
-        resourcesManager.levelMusic.play();
-        resourcesManager.mainMenuMusic.stop();
-
 
 
     }
@@ -73,10 +70,7 @@ public class GameScene extends BaseScene{
     @Override
     public void onBackKeyPressed()
     {
-
         SceneManager.getInstance().loadMenuScene(engine);
-        resourcesManager.mainMenuMusic.play();
-        resourcesManager.levelMusic.stop();
     }
 
     @Override
@@ -88,11 +82,9 @@ public class GameScene extends BaseScene{
     public void disposeScene() {
         camera.setHUD(null);
         camera.setCenter(400, 240);
-        resourcesManager.mainMenuMusic.play();
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.
-
     }
 
     private void createBackground()
@@ -151,7 +143,7 @@ public class GameScene extends BaseScene{
         };
 
         registerUpdateHandler(cameraUpdateHandler);
-
+        resourcesManager.levelMusic.play();
         attachChild(player);
     }
 
@@ -415,10 +407,11 @@ public class GameScene extends BaseScene{
                         detachChild(enemy);
                     }
                 }
+<<<<<<< HEAD
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
                 listaBalasEnemy.removeAll(balasAremoverEnemy);
                 enemyList.removeAll(inimigosAremover);
-
+=======
 
                 //Remover balas que saem do ecrã
                 BalaManager.RemoveBalas();
@@ -434,6 +427,7 @@ public class GameScene extends BaseScene{
                     detachChild(inimigo);
                 }
                 InimigosRemover.clear();
+>>>>>>> 4155e8a7a22dd02dd8ccebcb0d8c2dc956d58ddb
             }
 
             @Override
