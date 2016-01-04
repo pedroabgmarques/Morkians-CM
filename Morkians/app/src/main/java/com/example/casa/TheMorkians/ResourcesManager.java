@@ -12,6 +12,7 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.io.IOException;
@@ -57,12 +58,14 @@ public class ResourcesManager {
     public ITextureRegion gameMissileRegion;
     public ITextureRegion objectMoonRegion;
     public ITextureRegion objectPlanetRegion;
+    public ITiledTextureRegion gameExplosionRegion;
 
     private BitmapTextureAtlas loadMenuTextureAtlas;
     private BitmapTextureAtlas MenuTextureAtlas;
     private BitmapTextureAtlas gameTextureAtlas;
     private BitmapTextureAtlas gameVirtualJoystickAtlas;
     private BitmapTextureAtlas gameLevelAtlas;
+    private BitmapTextureAtlas explosionAtlas;
 
     public Sound soundExplosion;
     public Sound soundShoot;
@@ -152,6 +155,11 @@ public class ResourcesManager {
                 activity,"Moon.png",1160,1418);
         gameLevelAtlas.load();
 
+        explosionAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 900, 900, TextureOptions.BILINEAR);
+        gameExplosionRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(explosionAtlas, activity, "explosao.png",
+                0, 0, 9, 9);
+        explosionAtlas.load();
+
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/controls/");
         gameVirtualJoystickAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 512, TextureOptions.BILINEAR);
         gameVirtualJoystickBaseRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameVirtualJoystickAtlas,
@@ -161,6 +169,8 @@ public class ResourcesManager {
         gameFireButtonRegion= BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameVirtualJoystickAtlas,
                 activity,"fireButton.png",128,129);
         gameVirtualJoystickAtlas.load();
+
+
 
     }
 

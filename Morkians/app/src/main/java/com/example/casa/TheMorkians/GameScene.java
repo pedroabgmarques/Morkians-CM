@@ -16,6 +16,7 @@ import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -371,6 +372,13 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         setChildScene(velocityOnScreenControl);
     }
 
+    private void ExplodeStuff(float x, float y){
+        AnimatedSprite explosion = new AnimatedSprite(x, y, resourcesManager.gameExplosionRegion,
+                vbom);
+        attachChild(explosion);
+        explosion.animate(10, 0);
+    }
+
     private void colisions()
     {
         //enemyList
@@ -410,6 +418,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                             
                             inimigosAremover.add(enemy);
                             detachChild(enemy);
+
+                            ExplodeStuff(bala.getX(), bala.getY());
 
                         }
                     }
