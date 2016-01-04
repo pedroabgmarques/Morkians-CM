@@ -1,5 +1,10 @@
 package com.example.casa.TheMorkians;
 
+<<<<<<< HEAD
+=======
+import android.widget.Toast;
+
+>>>>>>> ce2caec5accbb25cd5be65f56c67d986a8129bea
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -17,6 +22,7 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,6 +41,8 @@ public class GameScene extends BaseScene{
     private Enemy bomberEnemy;
     private Enemy heavyBomberEnemy;
     private ObjectsScene planet,moon;
+    private ArrayList<Bala> listaBalasEnemy;
+    private ArrayList<Bala> listaBalasPlayer;
 
     private void addToScore(int i)
     {
@@ -46,6 +54,7 @@ public class GameScene extends BaseScene{
     public void createScene() {
 
         enemyList=new ArrayList<>();
+        BalaManager.Initialize();
         createBackground();
         createHUD();
         createControls();
@@ -54,9 +63,6 @@ public class GameScene extends BaseScene{
         addHeavyBomberEnemyHandler();
         addObjectsInTheScene();
         createLevel();
-
-
-        
 
 
     }
@@ -115,9 +121,13 @@ public class GameScene extends BaseScene{
         player.setScale(0.7f);
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
+<<<<<<< HEAD
         resourcesManager.levelMusic.play();
 
 
+=======
+        colisions();
+>>>>>>> ce2caec5accbb25cd5be65f56c67d986a8129bea
         //A linha abaixo faz a camara seguir o jogador
         //camera.setChaseEntity(player);
 
@@ -164,34 +174,39 @@ public class GameScene extends BaseScene{
 
         attachChild(kamikazeEnemy);
         enemyList.add(kamikazeEnemy);
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> ce2caec5accbb25cd5be65f56c67d986a8129bea
         addShoot();
     }
     private void addShoot()
     {
-        IUpdateHandler shootIUpdateHandler =new IUpdateHandler() {
-            @Override
-            public void onUpdate(float pSecondsElapsed)
-            {
-                for (Enemy enemy :enemyList
-                        )
-                {
+        TimerHandler timerHandler = new TimerHandler(3, true,
+                new ITimerCallback() {
+                    @Override
+                    public void onTimePassed(TimerHandler pTimerHandler) {
 
-                    enemy.shoot(enemy.getX(), enemy.getY());
-                }
+                        for (Enemy enemy :enemyList
+                                )
+                        {
+                            Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
+                            if(!bala.hasParent()){
+                                attachChild(bala);
+                            }
+                        }
 
-            }
+                        //Remover balas que saem do ecrã
+                        BalaManager.RemoveBalas();
 
-            @Override
-            public void reset() {
+                    }
+                });
 
-            }
-        };
-
+        registerUpdateHandler(timerHandler);
 
     }
     private void createNewBomberEnemy()
@@ -346,6 +361,70 @@ public class GameScene extends BaseScene{
 
 
         setChildScene(velocityOnScreenControl);
+
+    }
+
+    private void colisions()
+    {
+        //enemyList
+        //listaBalasEnemy
+        //listaBalasPlayer
+
+
+
+
+        IUpdateHandler colisionHandler = new IUpdateHandler()
+        {
+            @Override
+            public void onUpdate(float pSecondsElapsed)
+            {
+                listaBalasEnemy = BalaManager.getBalasInimigo();
+                listaBalasPlayer = BalaManager.getBalasPlayer();
+                //ArrayList<Sprite> balasAremover = new ArrayList<Sprite>();
+                //ArrayList<Sprite> inimigosAremover = new ArrayList<Sprite>();
+                //percorre lista de balas dos inimigos e verifica colisao com player
+                for(Bala bala : listaBalasEnemy)
+                {
+                    if(bala.collidesWith(player))
+                    {
+                        //player.vidas--;
+                        //player perde vida
+                        //bala destruida
+                        //Toast.makeText(resourcesManager.activity, "colisao bala com player", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                //percorre lista de balas do player e verifica colisao com enimigos
+                for(Bala bala:listaBalasPlayer)
+                {
+                    for(Enemy enemy:enemyList)
+                    {
+                        if(bala.collidesWith(enemy))
+                        {
+                            //inimigo explode violentamente
+                            //bala destruida
+                        }
+                    }
+
+                }
+
+                for(Sprite enemy:enemyList)
+                {
+                    if(enemy.collidesWith(player))
+                    {
+                        //destruir player
+                        //destruir enemy
+                    }
+                }
+
+            }
+
+            @Override
+            public void reset()
+            {
+
+            }
+        };
+        registerUpdateHandler(colisionHandler);
 
     }
 }
