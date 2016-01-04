@@ -99,8 +99,7 @@ public class    SceneManager {
         pOnCreateSceneCallback.onCreateSceneFinished(splashScene);
     }
 
-    public void createMenuScene()
-    {
+    public void createMenuScene() throws IOException {
         ResourcesManager.getInstance().loadMenuResources();
         menuScene = new MainMenuScene();
         loadingScene = new LoadingScene();
@@ -119,8 +118,7 @@ public class    SceneManager {
     {
         setScene(loadingScene);
         ResourcesManager.getInstance().unloadMenuTextures();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
-        {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) throws IOException {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameResources();
@@ -135,13 +133,14 @@ public class    SceneManager {
         setScene(loadingScene);
         gameScene.disposeScene();
         ResourcesManager.getInstance().unloadGameTextures();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
-        {
-            public void onTimePassed(final TimerHandler pTimerHandler)
-            {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) throws IOException {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuTextures();
+                ResourcesManager.getInstance().loadMenuResources();
+
                 setScene(menuScene);
+
             }
         }));
     }
