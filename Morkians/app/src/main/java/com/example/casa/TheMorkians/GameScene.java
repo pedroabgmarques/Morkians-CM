@@ -341,8 +341,8 @@ public class GameScene extends BaseScene{
         //enemyList
         //listaBalasEnemy
         //listaBalasPlayer
-        final ArrayList<Sprite> listaBalasEnemy=new ArrayList<Sprite>();
-        final ArrayList<Sprite> listaBalasPlayer = new ArrayList<Sprite>();
+        final ArrayList<Bala> listaBalasEnemy = BalaManager.getBalasInimigo();
+        final ArrayList<Bala> listaBalasPlayer = BalaManager.getBalasPlayer();
 
 
 
@@ -358,6 +358,7 @@ public class GameScene extends BaseScene{
                 {
                     if(bala.collidesWith(player))
                     {
+                        player.vidas--;
                         //player perde vida
                         //bala destruida
                     }
