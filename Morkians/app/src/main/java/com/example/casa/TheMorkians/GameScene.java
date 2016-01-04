@@ -178,7 +178,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     {
         Random enemyRandom = new Random();
         int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameKamikazeRegion.getWidth());
-        int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameKamikazeRegion.getHeight()));
+        int y = enemyRandom.nextInt((int) camera.getHeight())+1;
 
         kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom, resourcesManager);
         kamikazeEnemy.setScale(0.8f);
@@ -188,13 +188,14 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         kamikazeEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
         int duration = enemyRandom.nextInt(4) + 2;
-        int velocity=10;
+        int velocity=3;
+
 
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
-                kamikazeEnemy.getX(), -kamikazeEnemy.getWidth());
+                kamikazeEnemy.getX(), player.getX()-25);
         kamikazeEnemy.registerEntityModifier(moveXModifier);
         MoveYModifier moveYModifier=new MoveYModifier(duration*velocity,
-                kamikazeEnemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*kamikazeEnemy.getX());
+                kamikazeEnemy.getY(),player.getY());
         kamikazeEnemy.registerEntityModifier(moveYModifier);
 
         attachChild(kamikazeEnemy);
