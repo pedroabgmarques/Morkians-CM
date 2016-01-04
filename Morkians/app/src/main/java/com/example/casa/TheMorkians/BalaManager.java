@@ -1,5 +1,7 @@
 package com.example.casa.TheMorkians;
 
+import android.util.Log;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -60,7 +62,7 @@ public class BalaManager {
         listaBalasEnemyMortas.remove(bala);
 
         Log.v("debug", "Bala adicionada!");
-        Log.v("debug", "Vivas: "+ listaBalasEnemyVivas.size());
+        Log.v("debug", "Vivas: " + listaBalasEnemyVivas.size());
         Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
 
         bala.resetEntityModifiers();
@@ -99,14 +101,14 @@ public class BalaManager {
     public static void RemoveBalas(){
 
         listaBalasRemover.clear();
-        //listaBalasDetach.clear();
+        listaBalasDetach.clear();
         for(Bala bala: listaBalasEnemyVivas){
             if(bala.getX()<=camera.getCenterX() /*-camera.getWidth()/2*/){
                 listaBalasRemover.add(bala);
             }
         }
 
-        //listaBalasDetach.addAll(listaBalasRemover);
+        listaBalasDetach.addAll(listaBalasRemover);
 
         for(Bala bala: listaBalasRemover){
             listaBalasEnemyVivas.remove(bala);
