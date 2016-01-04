@@ -23,6 +23,7 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -401,10 +402,26 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                 {
                     if(player != null && bala.collidesWith(player))
                     {
+                        float posPlayX,posPlayY;
+                        posPlayX=player.getX();
+                        posPlayY=player.getY();
+                        ExplodeStuff(posPlayX, posPlayY);
+
                         detachChild(player);
+                        player=null;
+                        detachChild(bala);
                         balasAremoverEnemy.add(bala);
 
-                        onBackKeyPressed();
+                        TimerHandler timerHandler=new TimerHandler(2, false, new ITimerCallback() {
+                            @Override
+                            public void onTimePassed(TimerHandler pTimerHandler) throws IOException
+                            {
+                                onBackKeyPressed();
+                            }
+                        });
+
+                        registerUpdateHandler(timerHandler);
+
                     }
                 }
 
@@ -433,11 +450,28 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                 {
                     if(player != null && enemy.collidesWith(player))
                     {
+                        float posPlayX,posPlayY,posEnemX,posEnemY;
+                        posPlayX=player.getX();
+                        posPlayY=player.getY();
+                        posEnemX=enemy.getX();
+                        posEnemY=enemy.getY();
+
                         detachChild(player);
                         player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
-                        onBackKeyPressed();
+
+                        ExplodeStuff(posPlayX, posPlayY);
+                        ExplodeStuff(posEnemX, posEnemY);
+                        TimerHandler timerHandler=new TimerHandler(2,false, new ITimerCallback() {
+                            @Override
+                            public void onTimePassed(TimerHandler pTimerHandler) throws IOException
+                            {
+                                onBackKeyPressed();
+                            }
+                        });
+                        registerUpdateHandler(timerHandler);
+
                     }
                 }
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
