@@ -411,21 +411,20 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         player=null;
                         detachChild(bala);
                         balasAremoverEnemy.add(bala);
-<<<<<<< HEAD
+
 
                         TimerHandler timerHandler=new TimerHandler(2, false, new ITimerCallback() {
                             @Override
                             public void onTimePassed(TimerHandler pTimerHandler) throws IOException
                             {
-                                onBackKeyPressed();
+                                SceneManager.getInstance().createFinishScene();
                             }
                         });
 
                         registerUpdateHandler(timerHandler);
 
-=======
-                        SceneManager.getInstance().createFinishScene();
->>>>>>> 8f70fe5d79bab0973100cbdd50525da996e8ee37
+
+
                     }
                 }
 
@@ -464,7 +463,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
-<<<<<<< HEAD
+
 
                         ExplodeStuff(posPlayX, posPlayY);
                         ExplodeStuff(posEnemX, posEnemY);
@@ -472,15 +471,15 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                             @Override
                             public void onTimePassed(TimerHandler pTimerHandler) throws IOException
                             {
-                                onBackKeyPressed();
+                                SceneManager.getInstance().createFinishScene();
                             }
                         });
                         registerUpdateHandler(timerHandler);
 
-=======
-                        SceneManager.getInstance().createFinishScene();
+
+
                         //onBackKeyPressed();
->>>>>>> 8f70fe5d79bab0973100cbdd50525da996e8ee37
+
                     }
                 }
                 listaBalasPlayer.removeAll(balasAremoverPlayer);
