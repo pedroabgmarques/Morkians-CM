@@ -59,6 +59,9 @@ public class GameScene extends BaseScene{
         addHeavyBomberEnemyHandler();
         addObjectsInTheScene();
         createLevel();
+        resourcesManager.levelMusic.play();
+        resourcesManager.mainMenuMusic.stop();
+
 
 
     }
@@ -66,7 +69,10 @@ public class GameScene extends BaseScene{
     @Override
     public void onBackKeyPressed()
     {
+
         SceneManager.getInstance().loadMenuScene(engine);
+        resourcesManager.mainMenuMusic.play();
+        resourcesManager.levelMusic.stop();
     }
 
     @Override
@@ -78,9 +84,11 @@ public class GameScene extends BaseScene{
     public void disposeScene() {
         camera.setHUD(null);
         camera.setCenter(400, 240);
+        resourcesManager.mainMenuMusic.play();
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.
+
     }
 
     private void createBackground()
@@ -118,10 +126,6 @@ public class GameScene extends BaseScene{
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
 
-
-
-
-
         colisions();
 
         //A linha abaixo faz a camara seguir o jogador
@@ -142,7 +146,7 @@ public class GameScene extends BaseScene{
         };
 
         registerUpdateHandler(cameraUpdateHandler);
-        resourcesManager.levelMusic.play();
+
         attachChild(player);
     }
 

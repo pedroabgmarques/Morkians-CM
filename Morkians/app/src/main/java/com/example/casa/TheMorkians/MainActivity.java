@@ -1,13 +1,10 @@
 package com.example.casa.TheMorkians;
 
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
 
 import org.andengine.audio.music.Music;
-import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
-import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.Camera;
@@ -22,18 +19,14 @@ import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
-import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.andengine.util.adt.color.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -290,8 +283,7 @@ public class MainActivity extends BaseGameActivity
     {
         mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback()
         {
-            public void onTimePassed(final TimerHandler pTimerHandler)
-            {
+            public void onTimePassed(final TimerHandler pTimerHandler) throws IOException {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 SceneManager.getInstance().createMenuScene();
             }

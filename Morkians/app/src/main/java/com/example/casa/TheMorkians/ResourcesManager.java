@@ -77,11 +77,10 @@ public class ResourcesManager {
     // CLASS LOGIC
     //---------------------------------------------
 
-    public void loadMenuResources()
-    {
+    public void loadMenuResources() throws IOException {
         loadMenuGraphics();
-        loadMenuAudio();
         loadMenuFonts();
+        loadMenuAudio();
     }
 
     public void loadGameResources() throws IOException {
@@ -99,9 +98,10 @@ public class ResourcesManager {
         MenuTextureAtlas.load();
     }
 
-    private void loadMenuAudio()
-    {
-        //TODO Load da musica do menu
+    private void loadMenuAudio() throws IOException {
+
+        MusicFactory.setAssetBasePath("mfx/musica/");
+        mainMenuMusic = MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"Soaring-Theme.wav");
     }
 
     private void loadMenuFonts()
@@ -167,14 +167,10 @@ public class ResourcesManager {
     }
 
     private void loadGameAudio() throws IOException {
+        
+        MusicFactory.setAssetBasePath("mfx/musica/");
+        levelMusic=MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"World's Greatest Battle Music Ever_ Final Reckoning.mp3");
 
-        MusicFactory.setAssetBasePath("mfx/");
-        //mainMenuMusic = MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
-        levelMusic=MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"wagner_the_ride_of_the_valkyries.ogg");
-
-        //SoundFactory.setAssetBasePath("mfx/");
-        //soundExplosion=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
-        //soundExplosion=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
 
     }
 

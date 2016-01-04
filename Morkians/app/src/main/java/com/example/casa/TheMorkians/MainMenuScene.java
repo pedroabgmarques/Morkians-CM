@@ -16,22 +16,32 @@ public class MainMenuScene extends BaseScene
 
     @Override
     public void createScene() {
+
         createBackground();
         createMenuChildScene();
+        resourcesManager.mainMenuMusic.play();
+
+
+
     }
 
     @Override
-    public void onBackKeyPressed() {
+    public void onBackKeyPressed()
+    {
         System.exit(0);
+
     }
 
     @Override
-    public SceneManager.SceneType getSceneType() {
+    public SceneManager.SceneType getSceneType()
+    {
+
         return SceneManager.SceneType.SCENE_MENU;
     }
 
     @Override
-    public void disposeScene() {
+    public void disposeScene()
+    {
 
     }
 
@@ -69,11 +79,13 @@ public class MainMenuScene extends BaseScene
 
         menuChildScene.setOnMenuItemClickListener(this);
 
+
         setChildScene(menuChildScene);
     }
 
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY)
     {
+
         switch(pMenuItem.getID())
         {
             case MENU_PLAY:
