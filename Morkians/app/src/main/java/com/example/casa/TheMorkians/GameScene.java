@@ -1,5 +1,7 @@
 package com.example.casa.TheMorkians;
 
+import android.util.Log;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -44,6 +46,8 @@ public class GameScene extends BaseScene{
 
     @Override
     public void createScene() {
+
+        enemyList=new ArrayList<>();
         createBackground();
         createHUD();
         createControls();
@@ -52,6 +56,10 @@ public class GameScene extends BaseScene{
         addHeavyBomberEnemyHandler();
         addObjectsInTheScene();
         createLevel();
+
+
+        
+
 
     }
 
@@ -139,6 +147,7 @@ public class GameScene extends BaseScene{
         kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom, resourcesManager);
         kamikazeEnemy.setScale(0.8f);
 
+
         PhysicsHandler enemyPhysicsHandler = new PhysicsHandler(kamikazeEnemy);
         kamikazeEnemy.registerUpdateHandler(enemyPhysicsHandler);
 
@@ -152,9 +161,36 @@ public class GameScene extends BaseScene{
                 kamikazeEnemy.getY(),(float)Math.cos(enemyRandom.nextFloat()*50)*kamikazeEnemy.getX());
         kamikazeEnemy.registerEntityModifier(moveYModifier);
 
-
-        //enemyList.add(enemy);
         attachChild(kamikazeEnemy);
+        enemyList.add(kamikazeEnemy);
+
+
+
+
+        addShoot();
+    }
+    private void addShoot()
+    {
+        IUpdateHandler shootIUpdateHandler =new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed)
+            {
+                for (Enemy enemy :enemyList
+                        )
+                {
+
+                    enemy.shoot(enemy.getX(), enemy.getY());
+                }
+
+            }
+
+            @Override
+            public void reset() {
+
+            }
+        };
+
+
     }
     private void createNewBomberEnemy()
     {
@@ -197,6 +233,7 @@ public class GameScene extends BaseScene{
         MoveXModifier moveXModifier = new MoveXModifier(duration*velocity,
                 heavyBomberEnemy.getX(), -heavyBomberEnemy.getWidth());
         heavyBomberEnemy.registerEntityModifier(moveXModifier);
+        //heavyBomberEnemy.shoot(heavyBomberEnemy.getX(),heavyBomberEnemy.getY());
 
         attachChild(heavyBomberEnemy);
 
@@ -231,7 +268,7 @@ public class GameScene extends BaseScene{
 
     private void addEnemyHandler()
     {
-        TimerHandler timerHandler = new TimerHandler(1, true,
+        TimerHandler timerHandler = new TimerHandler(3, true,
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
