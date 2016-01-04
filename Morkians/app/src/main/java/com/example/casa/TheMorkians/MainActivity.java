@@ -2,6 +2,7 @@ package com.example.casa.TheMorkians;
 
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import org.andengine.audio.music.Music;
 import org.andengine.audio.sound.Sound;
@@ -23,6 +24,7 @@ import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.region.TextureRegion;
@@ -121,6 +123,16 @@ public class MainActivity extends BaseGameActivity
                 new FillResolutionPolicy(), camera);
 
         options.getTouchOptions().setNeedsMultiTouch(true);
+
+        if(MultiTouch.isSupported(this)) {
+            if(MultiTouch.isSupportedDistinct(this)) {
+                Toast.makeText(this, "MultiTouch detected --> Both controls will work properly!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "MultiTouch detected, but your device has problems distinguishing between fingers.\n\nControls are placed at different vertical locations.", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, "Sorry your device does NOT support MultiTouch!\n\n(Falling back to SingleTouch.)\n\nControls are placed at different vertical locations.", Toast.LENGTH_LONG).show();
+        }
 
         options.getAudioOptions().setNeedsMusic(true);
         options.getAudioOptions().setNeedsSound(true);
