@@ -14,20 +14,8 @@ import java.util.Random;
 public class Bala extends Sprite
 {
 
-    private float speed;
-    int duration;
-
-
-    public Bala(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager,Camera camera) {
+    public Bala(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
-
-
-        speed=40f;
-        Random random = new Random();
-        duration = random.nextInt();
-
-        MoveXModifier moveXModifier = new MoveXModifier(duration * speed,pX,-camera.getWidth() );
-        registerEntityModifier(moveXModifier);
 
     }
 }

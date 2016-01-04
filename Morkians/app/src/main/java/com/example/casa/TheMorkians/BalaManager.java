@@ -40,11 +40,11 @@ public class BalaManager {
         //criar à partida 100 balas
         for(int i = 0; i < 100; i++){
             //Balas do inimigo
-            bala = new Bala(0, 0, ResourcesManager.getInstance().gameEnemyLaserRegion, vbom, camera);
+            bala = new Bala(0, 0, ResourcesManager.getInstance().gameEnemyLaserRegion, vbom);
             listaBalasEnemyMortas.add(bala);
 
             //Balas do player
-            bala = new Bala(0, 0, ResourcesManager.getInstance().gamePlayerLaserRegion, vbom, camera);
+            bala = new Bala(0, 0, ResourcesManager.getInstance().gamePlayerLaserRegion, vbom);
             listaBalasPlayerMortas.add(bala);
         }
     }
@@ -62,15 +62,15 @@ public class BalaManager {
         listaBalasEnemyMortas.remove(bala);
 
         Log.v("debug", "Bala adicionada!");
-        Log.v("debug", "Vivas: "+ listaBalasEnemyVivas.size());
+        Log.v("debug", "Vivas: " + listaBalasEnemyVivas.size());
         Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
 
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX + camera.getCenterX() - camera.getWidth() / 2, -camera.getWidth() );
+        bala.setScale(0.5f);
+        MoveXModifier moveXModifier = new MoveXModifier(10f, pX, -camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
-        bala.setScale(0.5f);
         return bala;
     }
 
@@ -79,10 +79,10 @@ public class BalaManager {
         listaBalasPlayerMortas.remove(bala);
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX + camera.getCenterX() - camera.getWidth() / 2, camera.getWidth() );
+        bala.setScale(0.5f);
+        MoveXModifier moveXModifier = new MoveXModifier(10f, pX, camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasPlayerVivas.add(bala);
-        bala.setScale(0.5f);
         return bala;
     }
 
