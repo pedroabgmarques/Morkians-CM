@@ -141,7 +141,8 @@ public class GameScene extends BaseScene{
             @Override
             public void onUpdate(float pSecondsElapsed) {
                 camera.setCenter(camera.getCenterX() + 1, camera.getCenterY());
-                player.setPosition(player.getX() + 1, player.getY());
+                if(player!=null)
+                    player.setPosition(player.getX() + 1, player.getY());
                 
             }
 
@@ -160,7 +161,7 @@ public class GameScene extends BaseScene{
     private void createNewEnemy()
     {
         Random enemyRandom = new Random();
-        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameKamikazeRegion.getWidth());
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2-50 /*+ resourcesManager.gameKamikazeRegion.getWidth()*/);
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameKamikazeRegion.getHeight()));
 
         kamikazeEnemy = new Enemy(x, y, resourcesManager.gameKamikazeRegion, vbom, resourcesManager);
@@ -208,7 +209,7 @@ public class GameScene extends BaseScene{
     {
 
         Random enemyRandom = new Random();
-        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameBomberRegion.getWidth());
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 -50/*+ resourcesManager.gameBomberRegion.getWidth()*/);
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameBomberRegion.getHeight()));
 
         bomberEnemy = new Enemy(x, y, resourcesManager.gameBomberRegion, vbom, resourcesManager);
@@ -233,7 +234,7 @@ public class GameScene extends BaseScene{
     private void createNewHeavyBomberEnemy()
     {
         Random enemyRandom= new Random();
-        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 + resourcesManager.gameHeavyBomberRegion.getWidth());
+        int x = (int)(camera.getCenterX()+ camera.getWidth()/2 - 50 /*+ resourcesManager.gameHeavyBomberRegion.getWidth()*/);
         int y = enemyRandom.nextInt((int)(camera.getHeight() - resourcesManager.gameHeavyBomberRegion.getHeight()));
 
         heavyBomberEnemy=new Enemy(x,y,resourcesManager.gameHeavyBomberRegion,vbom, resourcesManager);
@@ -327,27 +328,20 @@ public class GameScene extends BaseScene{
             @Override
             public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
                 //condiçoes que impedem oplayer de passar os limites da camara
-                if(player.getY()+player.getHeight()>=camera.getHeight())
-                {
+                if(player!=null) {
+                    if (player.getY() + player.getHeight() >= camera.getHeight()) {
 
-                    playerPhysicsHandler.setVelocity(pValueX * 200,-20);
-                }
-                else if(player.getY()<=player.getHeight())
-                {
-                    playerPhysicsHandler.setVelocity(pValueX * 200,+20);
+                        playerPhysicsHandler.setVelocity(pValueX * 200, -20);
+                    } else if (player.getY() <= player.getHeight()) {
+                        playerPhysicsHandler.setVelocity(pValueX * 200, +20);
 
+                    } else if (player.getX() <= camera.getCenterX() - camera.getWidth() / 2 + player.getWidth() / 2) {
+                        playerPhysicsHandler.setVelocity(+20, pValueY * 200);
+                    } else if (player.getX() + player.getWidth() / 2 >= camera.getCenterX() + camera.getWidth() / 2) {
+                        playerPhysicsHandler.setVelocity(-20, pValueY * 200);
+                    } else
+                        playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
                 }
-                else if (player.getX()<=camera.getCenterX()-camera.getWidth()/2+player.getWidth()/2)
-                {
-                    playerPhysicsHandler.setVelocity(+20,pValueY*200);
-                }
-                else if (player.getX()+player.getWidth()/2>=camera.getCenterX()+camera.getWidth()/2)
-                {
-                    playerPhysicsHandler.setVelocity(-20,pValueY*200);
-                }
-                else
-                    playerPhysicsHandler.setVelocity(pValueX * 200, pValueY * 200);
-
             }
 
             @Override
@@ -382,7 +376,7 @@ public class GameScene extends BaseScene{
                 //percorre lista de balas dos inimigos e verifica colisao com player
                 for(Bala bala : listaBalasEnemy)
                 {
-                    if(bala.collidesWith(player))
+                    if(player != null && bala.collidesWith(player))
                     {
                         detachChild(player);
                         balasAremoverEnemy.add(bala);
@@ -408,9 +402,10 @@ public class GameScene extends BaseScene{
                 //percorre lista de inimigos e verifica se colide com o player
                 for(Enemy enemy:enemyList)
                 {
-                    if(enemy.collidesWith(player))
+                    if(player != null && enemy.collidesWith(player))
                     {
                         detachChild(player);
+                        player=null;
                         inimigosAremover.add(enemy);
                         detachChild(enemy);
                     }
@@ -422,6 +417,10 @@ public class GameScene extends BaseScene{
 
                 //Remover balas que saem do ecrã
                 BalaManager.RemoveBalas();
+                for(Bala bala: BalaManager.listaBalasDetach){
+                    detachChild(bala);
+                }
+                BalaManager.listaBalasDetach.clear();
 
                 //Remover inimigos que saem do ecrã
                 for(Enemy inimigo: enemyList){

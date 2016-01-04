@@ -63,14 +63,22 @@ public class BalaManager {
         bala = listaBalasEnemyMortas.get(0);
         listaBalasEnemyMortas.remove(bala);
 
+<<<<<<< HEAD
         Log.v("debug", "Bala adicionada!");
-        Log.v("debug", "Vivas: "+ listaBalasEnemyVivas.size());
+        Log.v("debug", "Vivas: " + listaBalasEnemyVivas.size());
         Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
 
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
         MoveXModifier moveXModifier = new MoveXModifier(10f, pX, -camera.getWidth() );
+=======
+
+
+        bala.resetEntityModifiers();
+        bala.setPosition(pX, pY);
+        MoveXModifier moveXModifier = new MoveXModifier(10f, pX , -camera.getWidth() );
+>>>>>>> e4376e2c45102684fd8272f8c973705d66ef5ccf
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
         return bala;
