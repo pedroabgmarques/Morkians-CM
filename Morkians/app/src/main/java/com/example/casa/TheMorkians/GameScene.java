@@ -1,7 +1,5 @@
 package com.example.casa.TheMorkians;
 
-import android.util.Log;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
