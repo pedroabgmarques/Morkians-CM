@@ -44,6 +44,9 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     private ArrayList<Bala> listaBalasEnemy;
     private ArrayList<Bala> listaBalasPlayer;
     private ArrayList<Enemy> InimigosRemover;
+    private int backgroundInicio=8018;
+    private int contadorFundos=1;
+    private Sprite fundo, primeiroFundo, fundoAnterior;
 
     private void addToScore(int i)
     {
@@ -100,18 +103,38 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private void createBackground()
     {
-        attachChild(new Sprite(0, 240, resourcesManager.gameBackgroundRegion, vbom) {
+        primeiroFundo = new Sprite(0, 240, resourcesManager.gameBackgroundRegion, vbom);
+        attachChild(primeiroFundo);
 
+        //attachChild(new Sprite(backgroundInicio, 240, resourcesManager.gameBackgroundRegion, vbom));
+    }
 
-            //Magia negra para as texturas ficarem mais bonitas
-            /*
-            @Override
-            protected void preDraw(GLState pGLState, Camera pCamera) {
-                super.preDraw(pGLState, pCamera);
-                pGLState.enableDither();
-            }
-            */
-        });
+    private void changeBackground()
+    {
+        if(camera.getCenterX() >= 3609*contadorFundos)
+        {
+            //fundoAnterior = fundo;
+            fundo = new Sprite(backgroundInicio * contadorFundos , 240,resourcesManager.gameBackgroundRegion,vbom);
+
+            float playerX = player.getX();
+            float playerY = player.getY();
+            detachChild(player);
+            attachChild(fundo);
+            attachChild(player);
+            player.setX(playerX);
+            player.setY(playerY);
+            contadorFundos++;
+
+            //detachChild(fundoAnterior);
+        }
+        //if(camera.getCenterX() >= 3620 * contadorFundos)
+        //{
+        //    if(primeiroFundo!=null)
+        //    {
+        //        detachChild(primeiroFundo);
+        //    }
+        //    detachChild(fundoAnterior);
+        //}
     }
 
     private void createHUD()
@@ -131,6 +154,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         player = new Player(80, 230, resourcesManager.gamePlayerRegion, vbom);
         player.setScale(0.7f);
+
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
         setOnSceneTouchListener(this);
@@ -146,8 +170,11 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
             public void onUpdate(float pSecondsElapsed) {
                 camera.setCenter(camera.getCenterX() + 1, camera.getCenterY());
                 if(player!=null)
+                {
                     player.setPosition(player.getX() + 1, player.getY());
-                
+                }
+
+                changeBackground();
             }
 
             @Override
