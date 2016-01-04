@@ -2,7 +2,6 @@ package com.example.casa.TheMorkians;
 
 
 
-import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
@@ -13,12 +12,9 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
-import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
-import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 
 import java.util.ArrayList;
@@ -189,13 +185,16 @@ public class GameScene extends BaseScene{
     }
     private void addShoot()
     {
-        TimerHandler timerHandler = new TimerHandler(2, true,
+        Random random=new Random();
+        int shootTime=random.nextInt(6)+2;
+        TimerHandler timerHandler = new TimerHandler(shootTime, true,
                 new ITimerCallback() {
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
 
                         for (Enemy enemy :enemyList)
                         {
+
                             Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
                             attachChild(bala);
                         }
