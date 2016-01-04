@@ -420,6 +420,9 @@ public class GameScene extends BaseScene{
                 for(Bala bala: BalaManager.getBalasInimigo()){
                     bala.setPosition(bala.getX() - 3, bala.getY());
                 }
+                for(Bala bala: BalaManager.getBalasPlayer()){
+                    bala.setPosition(bala.getX() + 3, bala.getY());
+                }
 
                 //Remover balas que saem do ecrã
                 BalaManager.RemoveBalas();
