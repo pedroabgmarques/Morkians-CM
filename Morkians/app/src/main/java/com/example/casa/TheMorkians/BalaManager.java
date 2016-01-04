@@ -3,6 +3,7 @@ package com.example.casa.TheMorkians;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.ArrayList;
@@ -15,6 +16,9 @@ public class BalaManager {
     private static ArrayList<Bala> listaBalasPlayerMortas;
     private static ArrayList<Bala> listaBalasEnemyVivas;
     private static ArrayList<Bala> listaBalasEnemyMortas;
+
+    private static ArrayList<Bala> listaBalasRemover;
+
     private static ResourcesManager resourcesManager;
     private static VertexBufferObjectManager vbom;
     private static Camera camera;
@@ -29,6 +33,7 @@ public class BalaManager {
         listaBalasEnemyVivas = new ArrayList<Bala>();
         listaBalasPlayerMortas = new ArrayList<Bala>();
         listaBalasEnemyVivas = new ArrayList<Bala>();
+        listaBalasRemover = new ArrayList<Bala>();
 
         //criar à partida 100 balas
         for(int i = 0; i < 100; i++){
@@ -72,5 +77,21 @@ public class BalaManager {
         listaBalasPlayerVivas.add(bala);
         bala.setScale(0.5f);
         return bala;
+    }
+
+    public static void RemoverBalaEnemy(Bala bala){
+        listaBalasEnemyVivas.remove(bala);
+        listaBalasEnemyMortas.add(bala);
+    }
+
+    public static void RemoverBalaPlayer(Bala bala){
+        listaBalasPlayerVivas.remove(bala);
+        listaBalasPlayerMortas.add(bala);
+    }
+
+    public static void RemoveBalas(){
+        for(Sprite bala: listaBalasEnemyVivas){
+
+        }
     }
 }
