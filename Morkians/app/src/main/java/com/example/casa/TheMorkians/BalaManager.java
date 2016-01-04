@@ -60,15 +60,9 @@ public class BalaManager {
     public static Bala shootBalaInimigo(float pX, float pY){
         bala = listaBalasEnemyMortas.get(0);
         listaBalasEnemyMortas.remove(bala);
-
-        Log.v("debug", "Bala adicionada!");
-        Log.v("debug", "Vivas: " + listaBalasEnemyVivas.size());
-        Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
-
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
         listaBalasEnemyVivas.add(bala);
-        bala.setScale(0.5f);
         resourcesManager.soundShoot.play();
         return bala;
     }
@@ -76,12 +70,10 @@ public class BalaManager {
     public static Bala shootBalaPlayer(float pX, float pY){
         bala = listaBalasPlayerMortas.get(0);
         listaBalasPlayerMortas.remove(bala);
-        bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX, camera.getWidth() );
-        bala.registerEntityModifier(moveXModifier);
         listaBalasPlayerVivas.add(bala);
+        resourcesManager.soundShoot.play();
         return bala;
     }
 
