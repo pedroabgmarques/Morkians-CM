@@ -12,14 +12,14 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
-<<<<<<< HEAD
-=======
+
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
->>>>>>> 63bbe38ff7efe287af6e1b29d8fded77d4d65cec
+
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 
 import java.util.ArrayList;
