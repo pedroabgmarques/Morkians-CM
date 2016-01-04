@@ -19,6 +19,7 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -344,6 +345,67 @@ public class GameScene extends BaseScene{
 
 
         setChildScene(velocityOnScreenControl);
+
+    }
+
+    private void colisions()
+    {
+        //enemyList
+        //listaBalasEnemy
+        //listaBalasPlayer
+        final ArrayList<Sprite> listaBalasEnemy=new ArrayList<Sprite>();
+        final ArrayList<Sprite> listaBalasPlayer = new ArrayList<Sprite>();
+
+
+
+        IUpdateHandler colisionHandler = new IUpdateHandler()
+        {
+            @Override
+            public void onUpdate(float pSecondsElapsed)
+            {
+                ArrayList<Sprite> balasAremover = new ArrayList<Sprite>();
+                ArrayList<Sprite> inimigosAremover = new ArrayList<Sprite>();
+                //percorre lista de balas dos inimigos e verifica colisao com player
+                for(Sprite bala : listaBalasEnemy)
+                {
+                    if(bala.collidesWith(player))
+                    {
+                        //player perde vida
+                        //bala destruida
+                    }
+                }
+                //percorre lista de balas do player e verifica colisao com enimigos
+                for(Sprite bala:listaBalasPlayer)
+                {
+                    for(Sprite enemy:enemyList)
+                    {
+                        if(bala.collidesWith(enemy))
+                        {
+                            //inimigo explode violentamente
+                            //bala destruida
+                        }
+                    }
+
+                }
+
+                for(Sprite enemy:enemyList)
+                {
+                    if(enemy.collidesWith(player))
+                    {
+                        //destruir player
+                        //destruir enemy
+                    }
+                }
+
+            }
+
+            @Override
+            public void reset()
+            {
+
+            }
+        };
+        registerUpdateHandler(colisionHandler);
 
     }
 }
