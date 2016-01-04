@@ -3,6 +3,7 @@ package com.example.casa.TheMorkians;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
@@ -87,6 +88,8 @@ public class ResourcesManager {
         loadGameGraphics();
         loadGameFonts();
         loadGameAudio();
+        loadShootSound();
+        loadExplosionSound();
     }
 
     private void loadMenuGraphics()
@@ -167,10 +170,23 @@ public class ResourcesManager {
     }
 
     private void loadGameAudio() throws IOException {
-        
+
         MusicFactory.setAssetBasePath("mfx/musica/");
         levelMusic=MusicFactory.createMusicFromAsset(activity.getMusicManager(),activity,"World's Greatest Battle Music Ever_ Final Reckoning.mp3");
 
+
+    }
+    private void loadShootSound()throws IOException
+    {
+        SoundFactory.setAssetBasePath("mfx/musica/");
+        soundShoot=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"lightsaber_01.wav");
+
+
+    }
+    private void loadExplosionSound()throws IOException
+    {
+        //SoundFactory.setAssetBasePath("mfx/musica/");
+        //soundExplosion=SoundFactory.createSoundFromAsset(activity.getSoundManager(),activity,"");
 
     }
 

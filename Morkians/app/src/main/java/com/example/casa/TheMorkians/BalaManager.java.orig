@@ -1,11 +1,7 @@
 package com.example.casa.TheMorkians;
 
-import android.util.Log;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.modifier.MoveXModifier;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.ArrayList;
@@ -63,24 +59,21 @@ public class BalaManager {
         bala = listaBalasEnemyMortas.get(0);
         listaBalasEnemyMortas.remove(bala);
 
-<<<<<<< HEAD
         Log.v("debug", "Bala adicionada!");
-        Log.v("debug", "Vivas: " + listaBalasEnemyVivas.size());
+        Log.v("debug", "Vivas: "+ listaBalasEnemyVivas.size());
         Log.v("debug", "Mortas: " + listaBalasEnemyMortas.size());
 
         bala.resetEntityModifiers();
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
         MoveXModifier moveXModifier = new MoveXModifier(10f, pX, -camera.getWidth() );
-=======
-
-
-        bala.resetEntityModifiers();
-        bala.setPosition(pX, pY);
-        MoveXModifier moveXModifier = new MoveXModifier(10f, pX , -camera.getWidth() );
->>>>>>> e4376e2c45102684fd8272f8c973705d66ef5ccf
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
+<<<<<<< HEAD
+=======
+        bala.setScale(0.5f);
+        resourcesManager.soundShoot.play();
+>>>>>>> dab86eef544c58d10bad93d35e1b72b2b0f60fb2
         return bala;
     }
 
