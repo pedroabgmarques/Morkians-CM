@@ -407,7 +407,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         if(bala.collidesWith(enemy))
                         {
                             balasAremoverPlayer.add(bala);
-                            
+                            detachChild(bala);
                             inimigosAremover.add(enemy);
                             detachChild(enemy);
 
