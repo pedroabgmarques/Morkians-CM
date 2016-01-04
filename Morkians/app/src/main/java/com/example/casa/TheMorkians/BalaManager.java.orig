@@ -69,8 +69,11 @@ public class BalaManager {
         MoveXModifier moveXModifier = new MoveXModifier(10f, pX, -camera.getWidth() );
         bala.registerEntityModifier(moveXModifier);
         listaBalasEnemyVivas.add(bala);
+<<<<<<< HEAD
+=======
         bala.setScale(0.5f);
         resourcesManager.soundShoot.play();
+>>>>>>> dab86eef544c58d10bad93d35e1b72b2b0f60fb2
         return bala;
     }
 

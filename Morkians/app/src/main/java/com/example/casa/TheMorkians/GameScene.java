@@ -136,6 +136,7 @@ public class GameScene extends BaseScene{
         //camera.setChaseEntity(player);
 
         //Mover a camara
+
         IUpdateHandler cameraUpdateHandler = new IUpdateHandler() {
             @Override
             public void onUpdate(float pSecondsElapsed) {
@@ -152,6 +153,7 @@ public class GameScene extends BaseScene{
         };
 
         registerUpdateHandler(cameraUpdateHandler);
+
 
         attachChild(player);
     }
@@ -194,9 +196,7 @@ public class GameScene extends BaseScene{
                         for (Enemy enemy :enemyList)
                         {
                             Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
-                            if(!bala.hasParent()){
-                                attachChild(bala);
-                            }
+                            attachChild(bala);
                         }
 
                     }
