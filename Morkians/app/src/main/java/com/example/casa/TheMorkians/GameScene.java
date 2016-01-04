@@ -13,9 +13,11 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.MoveYModifier;
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.align.HorizontalAlign;
 
@@ -133,6 +135,7 @@ public class GameScene extends BaseScene{
             public void onUpdate(float pSecondsElapsed) {
                 camera.setCenter(camera.getCenterX() + 1, camera.getCenterY());
                 player.setPosition(player.getX() + 1, player.getY());
+                
             }
 
             @Override
@@ -377,19 +380,21 @@ public class GameScene extends BaseScene{
             {
                 listaBalasEnemy = BalaManager.getBalasInimigo();
                 listaBalasPlayer = BalaManager.getBalasPlayer();
-                //ArrayList<Sprite> balasAremover = new ArrayList<Sprite>();
-                //ArrayList<Sprite> inimigosAremover = new ArrayList<Sprite>();
+                ArrayList<Bala> balasAremoverEnemy = new ArrayList<Bala>();
+                ArrayList<Bala> balasAremoverPlayer = new ArrayList<Bala>();
+                ArrayList<Enemy> inimigosAremover = new ArrayList<Enemy>();
                 //percorre lista de balas dos inimigos e verifica colisao com player
                 for(Bala bala : listaBalasEnemy)
                 {
                     if(bala.collidesWith(player))
                     {
-                        //player.vidas--;
-                        //player perde vida
-                        //bala destruida
-                        //Toast.makeText(resourcesManager.activity, "colisao bala com player", Toast.LENGTH_SHORT).show();
+                        detachChild(player);
+                        balasAremoverEnemy.add(bala);
+
+                        onBackKeyPressed();
                     }
                 }
+
                 //percorre lista de balas do player e verifica colisao com enimigos
                 for(Bala bala:listaBalasPlayer)
                 {
@@ -397,22 +402,26 @@ public class GameScene extends BaseScene{
                     {
                         if(bala.collidesWith(enemy))
                         {
-                            //inimigo explode violentamente
-                            //bala destruida
+                            balasAremoverPlayer.add(bala);
+                            inimigosAremover.add(enemy);
                         }
                     }
 
                 }
 
-                for(Sprite enemy:enemyList)
+                //percorre lista de inimigos e verifica se colide com o player
+                for(Enemy enemy:enemyList)
                 {
                     if(enemy.collidesWith(player))
                     {
-                        //destruir player
-                        //destruir enemy
+                        detachChild(player);
+                        inimigosAremover.add(enemy);
+                        detachChild(enemy);
                     }
                 }
-
+                listaBalasPlayer.removeAll(balasAremoverPlayer);
+                listaBalasEnemy.removeAll(balasAremoverEnemy);
+                enemyList.removeAll(inimigosAremover);
             }
 
             @Override
@@ -424,4 +433,7 @@ public class GameScene extends BaseScene{
         registerUpdateHandler(colisionHandler);
 
     }
+
+
+
 }
