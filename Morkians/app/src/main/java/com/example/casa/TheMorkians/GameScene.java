@@ -78,7 +78,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         SceneManager.getInstance().loadMenuScene(engine);
         resourcesManager.levelMusic.stop();
-        resourcesManager.mainMenuMusic.play();
 
     }
 
@@ -91,7 +90,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     public void disposeScene() {
         camera.setHUD(null);
         camera.setCenter(400, 240);
-        resourcesManager.mainMenuMusic.play();
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.

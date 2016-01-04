@@ -32,7 +32,7 @@ public class ResourcesManager {
     public MainActivity activity;
     public Camera camera;
     public VertexBufferObjectManager vbom;
-    public Font font;
+    public Font font, font2;
     public int score;
 
     public ITextureRegion loadMenuRegion;
@@ -119,6 +119,11 @@ public class ResourcesManager {
                 TextureOptions.BILINEAR,
                 activity.getAssets(), "Plok.ttf", 18, true, android.graphics.Color.GREEN);
         font.load();
+        font2 = FontFactory.createFromAsset(activity.getFontManager(), activity.getTextureManager(),
+                256, 256,
+                TextureOptions.BILINEAR,
+                activity.getAssets(), "Droid.ttf", 18, true, android.graphics.Color.GREEN);
+        font2.load();
 
     }
 
