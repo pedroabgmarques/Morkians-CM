@@ -1,9 +1,6 @@
 package com.example.casa.TheMorkians;
 
-import android.util.Log;
-
 import org.andengine.engine.camera.Camera;
-import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.ArrayList;
@@ -63,7 +60,7 @@ public class BalaManager {
         bala.setPosition(pX, pY);
         bala.setScale(0.5f);
         listaBalasEnemyVivas.add(bala);
-        resourcesManager.soundShoot.play();
+        //resourcesManager.soundShoot.play();
         return bala;
     }
 

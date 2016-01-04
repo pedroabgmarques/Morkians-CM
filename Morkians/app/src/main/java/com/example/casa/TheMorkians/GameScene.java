@@ -33,7 +33,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private HUD gameHUD;
     private Text scoreText;
-    private int score = 0;
+    private int score;
     private Player player;
     private PhysicsHandler playerPhysicsHandler;
     private ArrayList<Enemy> enemyList;
@@ -56,6 +56,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         enemyList=new ArrayList<Enemy>();
         InimigosRemover = new ArrayList<Enemy>();
+        score=0;
         BalaManager.Initialize();
         createBackground();
         createHUD();
@@ -120,7 +121,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         // CREATE SCORE TEXT
         scoreText = new Text(20, 420, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 0);
-        scoreText.setText("Score: 0");
+        scoreText.setText("Score: "+score);
         gameHUD.attachChild(scoreText);
 
         camera.setHUD(gameHUD);
@@ -165,7 +166,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown())
         {
-            Bala novaBala = BalaManager.shootBalaPlayer(player.getX() + player.getWidth() + 5, player.getY());
+            Bala novaBala = BalaManager.shootBalaPlayer(player.getX() + player.getWidth()/2, player.getY()-player.getHeight()/3);
             attachChild(novaBala);
             return true;
         }
@@ -279,7 +280,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         int y=(int)(camera.getCenterX());
 
         moon=new ObjectsScene(x*8,y-10,resourcesManager.objectMoonRegion,vbom);
-        moon.setScale(0.6f);
+        moon.setScale(0.3f);
 
         MoveXModifier moveMoonXModifier = new MoveXModifier(75,
                 moon.getX(), -moon.getWidth());
@@ -415,9 +416,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                         if(bala.collidesWith(enemy))
                         {
                             balasAremoverPlayer.add(bala);
-                            
+                            detachChild(bala);
                             inimigosAremover.add(enemy);
                             detachChild(enemy);
+                            addToScore(6);
 
                             ExplodeStuff(bala.getX(), bala.getY());
 
@@ -447,7 +449,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                     bala.setPosition(bala.getX() - 3, bala.getY());
                 }
                 for(Bala bala: BalaManager.getBalasPlayer()){
-                    bala.setPosition(bala.getX() + 3, bala.getY());
+                    bala.setPosition(bala.getX() + 6, bala.getY());
                 }
 
                 //Remover balas que saem do ecrã
