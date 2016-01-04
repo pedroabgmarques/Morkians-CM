@@ -32,7 +32,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private HUD gameHUD;
     private Text scoreText;
-    private int score = 0;
+    private int score;
     private Player player;
     private PhysicsHandler playerPhysicsHandler;
     private ArrayList<Enemy> enemyList;
@@ -55,6 +55,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         enemyList=new ArrayList<Enemy>();
         InimigosRemover = new ArrayList<Enemy>();
+        score=0;
         BalaManager.Initialize();
         createBackground();
         createHUD();
@@ -119,7 +120,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         // CREATE SCORE TEXT
         scoreText = new Text(20, 420, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 0);
-        scoreText.setText("Score: 0");
+        scoreText.setText("Score: "+score);
         gameHUD.attachChild(scoreText);
 
         camera.setHUD(gameHUD);
@@ -410,6 +411,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                             detachChild(bala);
                             inimigosAremover.add(enemy);
                             detachChild(enemy);
+                            addToScore(6);
 
                         }
                     }
