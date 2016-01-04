@@ -42,11 +42,11 @@ public class BalaManager {
         }
     }
 
-    public ArrayList<Bala> getBalasPlayer(){
+    public static ArrayList<Bala> getBalasPlayer(){
         return listaBalasPlayerVivas;
     }
 
-    public ArrayList<Bala> getBalasInimigo(){
+    public static ArrayList<Bala> getBalasInimigo(){
         return listaBalasEnemyVivas;
     }
 
