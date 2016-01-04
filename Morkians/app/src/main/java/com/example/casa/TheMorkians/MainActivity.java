@@ -16,7 +16,7 @@ import org.andengine.ui.activity.BaseGameActivity;
 import java.io.IOException;
 
 public class MainActivity extends BaseGameActivity{
-    private int width = 2048, height = 1536;
+    private int width = 800, height = 600;
     private Camera camera;
 
 
