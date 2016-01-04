@@ -39,6 +39,7 @@ public class GameScene extends BaseScene{
     private ObjectsScene planet,moon;
     private ArrayList<Bala> listaBalasEnemy;
     private ArrayList<Bala> listaBalasPlayer;
+    private ArrayList<Enemy> InimigosRemover;
 
     private void addToScore(int i)
     {
@@ -49,7 +50,8 @@ public class GameScene extends BaseScene{
     @Override
     public void createScene() {
 
-        enemyList=new ArrayList<>();
+        enemyList=new ArrayList<Enemy>();
+        InimigosRemover = new ArrayList<Enemy>();
         BalaManager.Initialize();
         createBackground();
         createHUD();
@@ -118,10 +120,6 @@ public class GameScene extends BaseScene{
         playerPhysicsHandler = new PhysicsHandler(player);
         player.registerUpdateHandler(playerPhysicsHandler);
 
-
-
-
-
         colisions();
 
         //A linha abaixo faz a camara seguir o jogador
@@ -172,13 +170,6 @@ public class GameScene extends BaseScene{
         attachChild(kamikazeEnemy);
         enemyList.add(kamikazeEnemy);
 
-
-
-
-
-
-
-
         addShoot();
     }
     private void addShoot()
@@ -188,17 +179,13 @@ public class GameScene extends BaseScene{
                     @Override
                     public void onTimePassed(TimerHandler pTimerHandler) {
 
-                        for (Enemy enemy :enemyList
-                                )
+                        for (Enemy enemy :enemyList)
                         {
                             Bala bala = BalaManager.shootBalaInimigo(enemy.getX(), enemy.getY());
                             if(!bala.hasParent()){
                                 attachChild(bala);
                             }
                         }
-
-                        //Remover balas que saem do ecrã
-                        BalaManager.RemoveBalas();
 
                     }
                 });
@@ -225,6 +212,8 @@ public class GameScene extends BaseScene{
                 bomberEnemy.getX(), -bomberEnemy.getWidth());
         bomberEnemy.registerEntityModifier(moveXModifier);
 
+        enemyList.add(bomberEnemy);
+
         attachChild(bomberEnemy);
 
 
@@ -248,6 +237,8 @@ public class GameScene extends BaseScene{
                 heavyBomberEnemy.getX(), -heavyBomberEnemy.getWidth());
         heavyBomberEnemy.registerEntityModifier(moveXModifier);
         //heavyBomberEnemy.shoot(heavyBomberEnemy.getX(),heavyBomberEnemy.getY());
+
+        enemyList.add(heavyBomberEnemy);
 
         attachChild(heavyBomberEnemy);
 
@@ -367,9 +358,6 @@ public class GameScene extends BaseScene{
         //listaBalasEnemy
         //listaBalasPlayer
 
-
-
-
         IUpdateHandler colisionHandler = new IUpdateHandler()
         {
             @Override
@@ -413,6 +401,20 @@ public class GameScene extends BaseScene{
                     }
                 }
 
+                //Remover balas que saem do ecrã
+                BalaManager.RemoveBalas();
+
+                //Remover inimigos que saem do ecrã
+                for(Enemy inimigo: enemyList){
+                    if(inimigo.getX() < camera.getCenterX() - camera.getWidth() - inimigo.getWidth() / 2){
+                        InimigosRemover.add(inimigo);
+                    }
+                }
+                for(Enemy inimigo: InimigosRemover){
+                    enemyList.remove(inimigo);
+                    detachChild(inimigo);
+                }
+                InimigosRemover.clear();
             }
 
             @Override
