@@ -192,9 +192,12 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown())
         {
-            Bala novaBala = BalaManager.shootBalaPlayer(player.getX() + player.getWidth()/2, player.getY()-player.getHeight()/3);
-            attachChild(novaBala);
-            return true;
+            if(player!=null)
+            {
+                Bala novaBala = BalaManager.shootBalaPlayer(player.getX() + player.getWidth() / 2, player.getY() - player.getHeight() / 3);
+                attachChild(novaBala);
+                return true;
+            }
         }
         return false;
     }
