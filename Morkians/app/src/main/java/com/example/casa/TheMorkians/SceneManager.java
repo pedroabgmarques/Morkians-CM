@@ -11,9 +11,7 @@ import java.io.IOException;
  * Created by PedroMarques on 29-12-2015.
  */
 public class    SceneManager {
-    //---------------------------------------------
-    // SCENES
-    //---------------------------------------------
+
 
     private BaseScene splashScene;
     private BaseScene menuScene;
@@ -21,9 +19,7 @@ public class    SceneManager {
     private BaseScene loadingScene;
     private BaseScene finishScene;
 
-    //---------------------------------------------
-    // VARIABLES
-    //---------------------------------------------
+
 
     private static final SceneManager INSTANCE = new SceneManager();
 
@@ -42,9 +38,7 @@ public class    SceneManager {
         SCENE_FINISH
     }
 
-    //---------------------------------------------
-    // CLASS LOGIC
-    //---------------------------------------------
+
 
     public void setScene(BaseScene scene)
     {
@@ -76,9 +70,7 @@ public class    SceneManager {
         }
     }
 
-    //---------------------------------------------
-    // GETTERS AND SETTERS
-    //---------------------------------------------
+
 
     public static SceneManager getInstance()
     {

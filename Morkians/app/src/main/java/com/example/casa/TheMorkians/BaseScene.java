@@ -11,9 +11,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by PedroMarques on 29-12-2015.
  */
 public abstract class BaseScene extends Scene {
-    //---------------------------------------------
-    // VARIABLES
-    //---------------------------------------------
+
 
     protected Engine engine;
     protected Activity activity;
@@ -21,9 +19,7 @@ public abstract class BaseScene extends Scene {
     protected VertexBufferObjectManager vbom;
     protected Camera camera;
 
-    //---------------------------------------------
-    // CONSTRUCTOR
-    //---------------------------------------------
+
 
     public BaseScene()
     {
@@ -35,9 +31,6 @@ public abstract class BaseScene extends Scene {
         createScene();
     }
 
-    //---------------------------------------------
-    // ABSTRACTION
-    //---------------------------------------------
 
     public abstract void createScene();
 

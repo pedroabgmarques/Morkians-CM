@@ -34,7 +34,7 @@ public class BalaManager {
         listaBalasRemover = new ArrayList<Bala>();
         listaBalasDetach = new ArrayList<Bala>();
 
-        //criar à partida 100 balas
+        //criar à partida 1000 balas
         for(int i = 0; i < 1000; i++){
             //Balas do inimigo
             bala = new Bala(0, 0, ResourcesManager.getInstance().gameEnemyLaserRegion, vbom);
